@@ -1,22 +1,5 @@
 Dockerized Tailwind Styled User Journey with a Flask MySQL API.
 
-# SETUP
-First create a .env file in the root directory with the following...
-
-```bash
-TAG=2.1.2
-MYSQL_HOST=10.5.0.2
-MYSQL_ROOT_PASSWORD=pA55wORD$
-MYSQL_USER=root
-MYSQL_DATABASE=pestle_DB
-MYSQL_PASSWORD=pA55wORD$
-```
-
-Additionally an .env file within the next directory with the following
-```bash
-NEXT_PUBLIC_API_URI=http://localhost:8081
-```
-
 # NVM
 ```bash
 nvm install v18.20.8
