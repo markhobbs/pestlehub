@@ -1,0 +1,12 @@
+FROM python:3.9.5-slim-buster
+ARG app_root=/app
+WORKDIR /app
+
+COPY ./src/ ${app_root}/
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+ENV HOME=${app_root}
+
+EXPOSE 8081
+CMD ["gunicorn", "-c", "gunicorn_config.py", "wsgi:app"]

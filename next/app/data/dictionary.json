@@ -1,0 +1,70 @@
+{ 
+  "meta": {
+    "title": "PestleHub"
+  },
+  "pages" : {
+    "about":{
+      "heroHeading": "Hey there, food enthusiast!",
+      "heroPara": "Welcome to PestleHub. We're all about culinary creativity and community.",
+      "featuresHeading": "Features",
+      "featuresPara": "Explore our diverse selection of ingredients to inspire your next culinary adventure.",
+      "featuresPara2" : "Get creative! Use our tools to customize and create your unique recipes.",
+      "featuresRegHeading": "Features upon Registration",
+      "featuresRegPara": "Keep track of the dishes you love by saving them for later use.",
+      "joinPara": "Join us today and let’s whip up some deliciousness."
+    }
+  },
+  "config" : {
+    "email" : "query@pestlehub.com",
+    "loggedOut" : "Successfully logged out",
+    "checkEmail": "An Activation Email has been sent to your registered email address.",
+    "checkJunk": "If after 10 mins you haven't recieved your activation email. Please check your email clients spam folder.",
+    "headingdDishSpices": "Herb, Seasoning, or Spice",
+    "headingdDishIngredients": "Ingredients",
+    "headingBasket": "Basket",
+    "promptBasket": "Basket generated from your saved dishes.",
+    "headingShareOptions": "Sharing Options",
+    "headingBasketIngredients": "Ingredients",
+    "headingBasketSpices": "Spices",
+    "headingDashboard": "Dashboard",
+    "bookmarks": "Bookmarks",
+    "creations": "Creations",
+    "noCreations" : "No Creations.",
+    "headingDishBuilder": "Dish Builder",
+    "noBookmarks": "No Bookmarks.",
+    "dishCreateListEmpty": "Currently No Dishes Created",
+    "missingIngredientPrompt": "Missing ingredients? Tell us by emailing <a href='mailto:query@pestlehub.com'>query@pestlehub.com</a>",
+    "promptBasketEstimate": "*Basket Cost Estimate",
+    "activationEmailResp": "Activation email will follow shortly, follow instructions for activation."
+  },
+  "button" : {
+    "home": "Home",
+    "back": "Back",
+    "backAria": "Return to Previous Page",
+    "homeAria": "Return to Home Page",
+    "top": "Top",
+    "topAria": "Go to Top of Page",
+    "print": "Print",
+    "printAria": "Print This Page",
+    "builder": "Builder",
+    "rename": "Rename",
+    "share": "Share",
+    "delete": "Delete",
+    "update":"Update",
+    "basket": "Fill Basket",
+    "createDish": "DishBuilder",
+    "dishBuilderAdd": "Build",
+    "addToBasket": "Fill Basket",
+    "loginDishBuilder": "Login to Dish Builder",
+    "loginToSave": "Login to Save",
+    "saveDish": "Save Dish",
+    "bookmark": "Bookmark",
+    "openDishBuilder": "Dish Builder",
+    "currentPrice": "",
+    "addPrice": "Add",
+    "revealPrediction": "*Add 5 Prices To Reveal Basket Cost.",
+    "thankyou": "Thankyou",
+    "logout": "LOGOUT",
+    "removeSection": "Remove Section"
+  }
+}

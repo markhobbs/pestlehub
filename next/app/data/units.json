@@ -1,0 +1,69 @@
+[{
+    "code": "",
+    "index": "-1",
+    "name": "Select"
+},{
+    "code": "cup",
+    "index": "5",
+    "name": "cup"
+}, {
+    "code": "fl oz",
+    "index": "4",
+    "name": "fluid oz"
+}, {
+    "code": "gl",
+    "index": "8",
+    "name": "gallon"
+}, {
+    "code": "g",
+    "index": "12",
+    "name": "gram"
+}, {
+    "code": "kg",
+    "index": "14",
+    "name": "kilogram"
+}, {
+    "code": "l",
+    "index": "18",
+    "name": "litre"
+}, {
+    "code": "mg",
+    "index": "13",
+    "name": "millgram"
+}, {
+    "code": "ml",
+    "index": "9",
+    "name": "milliliter"
+}, {
+    "code": "oz",
+    "index": "11",
+    "name": "ounce"
+}, {
+    "code": "pch",
+    "index": "1",
+    "name": "pinch"
+}, {
+    "code": "pt",
+    "index": "6",
+    "name": "pint"
+}, {
+    "code": "lb",
+    "index": "15",
+    "name": "pound"
+}, {
+    "code": "qt",
+    "index": "7",
+    "name": "quart"
+}, {
+    "code": "tbs",
+    "index": "3",
+    "name": "tablespoon"
+}, {
+    "code": "tsp",
+    "index": "2",
+    "name": "teaspoon"
+}, {
+    "code": "tmb",
+    "index": "16",
+    "name": "thumb"
+}]

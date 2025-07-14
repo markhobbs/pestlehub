@@ -1,0 +1,15 @@
+Flask
+Flask-Caching
+Flask-Cors
+Flask_Httpauth
+Flask-MySQL
+Mysql-Connector-Python
+PyJWT
+Python-Dotenv
+Bleach
+Click
+gunicorn
+itsdangerous
+Jinja2
+markupsafe
+Werkzeug

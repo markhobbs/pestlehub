@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+
+:root {
+  --background: #efefef;
+  --foreground: #171717;
+
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-regal-blue: #243c5a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+    background-color: var(--background);
+}
