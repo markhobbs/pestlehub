@@ -1,7 +1,7 @@
 // step1.tsx
 "use client"
 
-import React, { useCallback } from "react";
+import React, { useCallback, ChangeEvent} from "react";
 import Heading from "@/components/Heading";
 import states from '@/data/states.json'
 import units from '@/data/units.json'
@@ -28,7 +28,7 @@ interface Method {
 }
 interface StepOneProps {
     dish: Dish;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement> | Ingredient[] | Method[]) => void;
+    handleChange: (e: ChangeEvent<HTMLInputElement> | Ingredient[] | Method[]) => void;
     next?: () => void;
     back?: () => void;
 }
