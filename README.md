@@ -9,7 +9,9 @@ nvm use v18.20.8
 
 # ENV
 Rename example .env.example > .env 
+
 Rename example /next/.env.example .env  > /next/.env
+
 Update to your requirements.  Or store them in Git enviorment variables 
 
 # NEXT
@@ -51,5 +53,7 @@ npm run test:coverage
 
 # POSSIBLE IMPROVEMENTS
 Port the Flask API to Express or NextJS Middleware.
+
 Encrypt API Requests/Responses.
+
 Not Logged in Dishbuilder User, Fix Journey break (Created Dishes) after login. 
