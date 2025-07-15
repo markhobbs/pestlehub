@@ -7,10 +7,13 @@ nvm install v18.20.8
 nvm use v18.20.8
 ```
 
+# ENV
+Rename example .env.example > .env 
+Rename example /next/.env.example .env  > /next/.env
+Update to your requirements.  Or store them in Git enviorment variables 
+
 # NEXT
-
 ```bash
-
 cd next
 
 npm install
@@ -27,7 +30,7 @@ docker-compose --env-file .env -f docker-compose.yml up -d --no-deps --build --r
 ```
 
 # SITE
-A Demo Account has been provided for accessing the dashboard. 
+A demo user account has been provided for accessing the dashboard. 
 
 Login: http://localhost:8082/login
 
@@ -49,3 +52,4 @@ npm run test:coverage
 # POSSIBLE IMPROVEMENTS
 Port the Flask API to Express or NextJS Middleware.
 Encrypt API Requests/Responses.
+Not Logged in Dishbuilder User, Fix Journey break (Created Dishes) after login. 
