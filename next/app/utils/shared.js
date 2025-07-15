@@ -36,5 +36,10 @@ export const convertAmountFriendly = (quantity) => {
     specialChar: /(?=.*?[#?!@$%^&*-])/,
     minLength: /.{8,}/,
   };
+
+  export const NUMBERS_REGEX = {
+    digits: /^\d+$/,
+    maxLength: /.{6,}/, 
+  };
   
   export const EMAIL_REGEX = /^\S+@\S+\.\S+$/;
