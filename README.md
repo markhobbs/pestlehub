@@ -28,7 +28,7 @@ npm run build
 
 cd ..
 
-docker-compose --env-file .env -f docker-compose.yml up -d --no-deps --build --remove-orphans
+docker-compose up -d --build
 ```
 
 # SITE

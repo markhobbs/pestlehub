@@ -90,7 +90,7 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
         </div>
       </div>
       <div>
-        {ingredients.length > 0 && <Heading Tag="h3" title="Search" />}
+        {query && <Heading Tag="h3" title="Search" />}
         {ingredients.length > 0 && <SearchResults />}
       </div>
    </div>};

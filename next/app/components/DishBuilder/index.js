@@ -5,7 +5,7 @@ import React, { useState, useCallback, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { DishContext } from '@/ContextProvider/DishProvider';
 import { ProfileContext } from '@/ContextProvider/ProfileProvider';
-import { capitalizeFirst } from "@/utils/shared";
+import { capitalizeFirst, NUMBERS_REGEX } from "@/utils/shared";
 import StepOne from "./Step1";
 import StepTwo from "./Step2";
 import StepThree from "./Step3";
@@ -15,11 +15,58 @@ const DishBuilder = () => {
   const router = useRouter();
   const { setPendingDishes, setDashboardDataStale } = useContext(DishContext);
   const { profile } = useContext(ProfileContext);
-  const username =  profile && profile.username;
+  const username =  profile && profile.username || {};
   const [step, setStep] = useState(1);
   const [dish, setDish] = useState({ id:'', title:'', ingredients:[], methods:[], time_prep: 0, time_cook: 0, publishedby: username});
   const next = useCallback(() => setStep((prev) => prev + 1), []);
   const back = useCallback(() => setStep((prev) => prev - 1), []);
+  const errorsDefault = {time_cook: null, time_prep: null}
+  const [errors, setErrors] = useState(errorsDefault);
+
+  /**
+   * Handles Validation to the form inputs and updates the dish state accordingly.
+   * 
+   * @param e - The change event or an array of ingredients or methods.
+   * 
+   * If `e` is an array:
+   * - If the array contains ingredients (determined by checking if the first element has a `quantity` property), 
+   *   updates the `ingredients` field of the dish state.
+   * - Otherwise, updates the `methods` field of the dish state.
+   * 
+   * If `e` is a change event:
+   * - Extracts the `name` and `value` from the event target and updates the corresponding field in the dish state.
+   */
+  const handleValidation = (e) => {
+    const { name, value } = e.target || {};
+    let errorMsg = "";
+    switch (name) {
+      case "time_cook":
+        errorMsg = validate(value);
+        setErrors((prevState) => ({ ...prevState, time_cook: errorMsg }));
+        break;
+      case "time_prep":
+        errorMsg = validate(value);
+        setErrors((prevState) => ({ ...prevState, time_prep: errorMsg }));
+        break;
+      default:
+        break;
+    }
+  };
+
+  /**
+   * Assigns the Regex to the input value.
+   * 
+   * @param value - The change event value for validating.
+   * 
+   */
+  const validate = (value) => {
+    if (value !== "") {
+      //if (time.length === 0) return "Time is empty";
+      if (!NUMBERS_REGEX.digits.test(value)) return "Digits only";
+      if (NUMBERS_REGEX.maxLength.test(value)) return "Maximum of 6 digits";
+      return "";
+    }
+  };
   
   /**
    * Handles changes to the form inputs and updates the dish state accordingly.
@@ -45,6 +92,8 @@ const DishBuilder = () => {
       const { name, value } = e.target;
       setDish((prevDish) => ({...prevDish, [name]: capitalizeFirst(value) }));
     }
+    // Revalidate
+    handleValidation(e);
   }, []);
 
   /**
@@ -66,10 +115,8 @@ const DishBuilder = () => {
       // REDIRECTING ON REMOVING PILL
       setPendingDishes(prev => [...prev, { dish: clone }]);
       setDashboardDataStale(true);
-
       // Navigate to the dashboard page
       router.push("/pages/dashboard");
-      
     },
     [dish, setPendingDishes, router]
   );
@@ -92,7 +139,10 @@ const DishBuilder = () => {
             dish={dish}
             handleChange={handleChange}
             back={back}
-            handleSubmit={handleSubmit} 
+            handleSubmit={handleSubmit}
+            handleValidation={handleValidation}
+            timeCookError={errors.time_cook} 
+            timePrepError={errors.time_prep}
           />)}
       </form>
   );
