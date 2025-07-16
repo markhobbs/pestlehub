@@ -42,9 +42,15 @@ interface StepThreeProps {
   titleError?: string | undefined;
 }
 
+interface SaveDishProps {
+  dish: Dish;
+  handleSubmit: () => void;
+  timeCookError?: string | undefined;
+  timePrepError?: string | undefined;
+}
 
-const SaveDishButton = (props: StepThreeProps) => {
- const {handleSubmit, dish, timePrepError, timeCookError} = props;
+const SaveDishButton = (props: SaveDishProps) => {
+ const {dish, handleSubmit, timeCookError, timePrepError} = props;
   return <button 
     className="cursor-pointer rounded-md bg-emerald-700 mt-4 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:bg-stone-500" 
     onClick={handleSubmit}
@@ -123,7 +129,7 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
         </p>
       </div>
     </div>
-    <SaveDishButton 
+    <SaveDishButton
       handleSubmit={handleSubmit}
       dish={dish}
       timePrepError={timePrepError}
