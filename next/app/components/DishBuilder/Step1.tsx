@@ -3,10 +3,11 @@
 
 import React, { useCallback, ChangeEvent} from "react";
 import Heading from "@/components/Heading";
+import Search from "@/components/DishBuilder/Search"
+import StepNav from "@/components/DishBuilder/StepNav";
+import dictionary from '@/data/dictionary.json';
 import states from '@/data/states.json'
 import units from '@/data/units.json'
-import Search from "./Search"
-import StepNav from "./StepNav";
 
 interface Dish {
     title: string;
@@ -73,7 +74,7 @@ const StepOne: React.FC<StepOneProps> = React.memo(({ dish, handleChange, next }
     }, [dish.ingredients, handleChange]);
 
     return <>
-        <StepNav next={next} title="Step 1 of 3 : Ingredients" />
+        <StepNav next={next} title={dictionary.dbuild.nav.step1} />
         <Search onAddIngredient={addIngredient} />
         {dish.ingredients.length > 0 && <Heading Tag="h3" title="Current Ingredients" />}
         {dish.ingredients && <ul>
