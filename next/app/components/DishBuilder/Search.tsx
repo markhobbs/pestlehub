@@ -41,16 +41,16 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
     return (ingredients.length > 0) && <>
       {(query && query.length > 0 && ingredients.length) && <ul>
         {ingredients
-          .filter(ingredient => (ingredient.name)
-          .toLowerCase()
-          .match(query))
-          .map(filtered => <li className="inline-flex" key={filtered.ingredient_ID}>
-          <button
-            className="cursor-pointer bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
-            onClick={(e) => handleAdd(e, filtered.name)}>
-            {filtered.name}
-          </button>
-        </li>)}
+          .filter(ingredient => ingredient.name.toLowerCase().match(query))
+          .map((filtered, index) => index < 10 && ( // <= only 5 items
+            <li className="inline-flex" key={filtered.ingredient_ID}>
+            <button
+              className="cursor-pointer bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
+              onClick={(e) => handleAdd(e, filtered.name)}>
+              {filtered.name}
+            </button>
+          </li>)
+        )}
       </ul>}
     </>
   };

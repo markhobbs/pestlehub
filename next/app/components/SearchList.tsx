@@ -1,7 +1,7 @@
 // SearchList.tsx
 "use client"
 
-import React, {useState,useRef} from "react";
+import React, {useState,useRef,ChangeEvent} from "react";
 import Link from "next/link";
 import Label from "@/components/Label";
 import Input from "@/components/Input";
@@ -9,13 +9,12 @@ import spices from "@/data/spices.json";
 
 
 const SearchList = () => {
-  const searchRef = useRef(null);
-  // console.log(searchRef.current);
+  const searchRef = useRef(null); // console.log(searchRef.current);
   const [filter, setFilter] = useState('');
 
-  const changeFilterName = (event) => {
-    if (event.target) {
-      const value = event.target.value;
+  const changeFilterName = ( e: ChangeEvent<HTMLInputElement> ) => {
+    if (e.target) {
+      const value = e.target.value;
       setFilter(value.toLowerCase());
     }
   }

@@ -1,7 +1,7 @@
 // step3.tsx
 "use client"
 
-import React from "react";
+import React, {ChangeEventHandler} from "react";
 import Heading from "@/components/Heading";
 import Label from "@/components/Label";
 import Input from "@/components/Input";
@@ -35,7 +35,7 @@ interface StepThreeProps {
   dish: Dish;
   handleChange: () => void;
   handleSubmit: () => void;
-  handleValidation: React.ChangeEventHandler<HTMLInputElement>
+  handleValidation: ChangeEventHandler<HTMLInputElement>
   timeCookError?: string | undefined;
   timePrepError?: string | undefined;
 }
@@ -66,7 +66,7 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
       <CurrentMethods dish={dish} />
     </div>
     <Heading Tag="h3" title="Optional" />
-    <div className="md:flex md:items-center">
+    <div className="md:flex">
       <div className="mb-2 md:mr-2">
         <Label 
           text="Preperation Time (mins)" 
@@ -78,10 +78,10 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
             onBlur={handleValidation} 
             pattern="[0-9]*" 
             text="0" />
-          <p className="text-red-600 dark:text-red-400 text-xs italic">
-            {timePrepError}
-          </p>
         </div>
+        <p className="text-red-600 dark:text-red-400 text-xs italic">
+          {timePrepError}
+        </p>
       </div>
       <div className="mb-2">
         <Label 
@@ -94,10 +94,10 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
             onBlur={handleValidation} 
             pattern="[0-9]*" 
             text="0" />
-          <p className="text-red-600 dark:text-red-400 text-xs italic">
-            {timeCookError}
-          </p>
         </div>
+        <p className="text-red-600 dark:text-red-400 text-xs italic">
+          {timeCookError}
+        </p>
       </div>
     </div>
   <button 
