@@ -5,16 +5,16 @@ import React, { createContext, useState } from 'react';
 export const DishContext = createContext("");
 
 export const DishProvider = ({children }) => {
-    const [isDashboardDataStale, setDashboardDataStale] = useState(false);
-    const [pendingDishes, setPendingDishes] = useState([]);
+    const [isStale, setStale] = useState(false);
+    const [Dishes, setDishes] = useState([]);
     const [inputs, setInputs] = useState();
     return <DishContext.Provider value={{ 
             inputs,
-            isDashboardDataStale,
-            pendingDishes,
+            isStale,
+            Dishes,
             setInputs,
-            setDashboardDataStale, 
-            setPendingDishes,
+            setStale, 
+            setDishes,
         }}>
         {children}
     </DishContext.Provider>

@@ -13,7 +13,7 @@ import StepThree from "./Step3";
 /* MultiStepForm - DishBuilder */
 const DishBuilder = () => {
   const router = useRouter();
-  const { setPendingDishes, setDashboardDataStale } = useContext(DishContext);
+  const { setDishes, setStale } = useContext(DishContext);
   const { profile } = useContext(ProfileContext);
   const username =  profile && profile.username || {};
   const [step, setStep] = useState(1);
@@ -127,12 +127,12 @@ const DishBuilder = () => {
       // Clone the current dish to avoid mutating the original object
       const clone = { ...dish };
       // Update the pending dishes list immutably
-      setPendingDishes(prev => [...prev, { dish: clone }]);
-      setDashboardDataStale(true);
+      setDishes(prev => [...prev, { dish: clone }]);
+      setStale(true);
       // Navigate to the dashboard page
       router.push("/pages/dashboard");
     },
-    [dish, router, setDashboardDataStale, setPendingDishes]
+    [dish, router, setStale, setDishes]
   );
 
   return (
