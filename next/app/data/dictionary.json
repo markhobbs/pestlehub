@@ -66,5 +66,22 @@
     "thankyou": "Thankyou",
     "logout": "LOGOUT",
     "removeSection": "Remove Section"
+  },
+  "dbuild": {
+    "nav": {
+      "step1": "Step 1 of 3 : Ingredients",
+      "step2": "Step 2 of 3 : Methods",
+      "step3": "Step 3 of 3 : Review & Save"
+    }
+  },
+  "snippets" : {
+    "noIngredients" : "Currently no ingredients. At least one ingredient is required.",
+    "noMethods" : "Currently No Methods. At least one method is required.",
+    "forgottenPassword" : "Forgot Password?",
+    "noAccount" : "Unable to locate Account! Please try the ",
+    "inspiration": {
+      "link": "Search",
+      "additional": "for a Spice."
+    }
   }
 }

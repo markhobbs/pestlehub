@@ -5,9 +5,10 @@ import React, { useState, useCallback} from "react";
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
 import Label from "@/components/Label";
+import StepNav from "@/components/DishBuilder/StepNav";
 import TextArea from "@/components/TextArea";
+import dictionary from '@/data/dictionary.json';
 import {capitalizeFirst} from "@/utils/shared";
-import StepNav from "./StepNav";
 
 interface Dish {
   title: string;
@@ -57,7 +58,7 @@ const StepTwo: React.FC<StepTwoProps> = React.memo(({ dish, handleChange, next, 
 
   return (
     <>
-      <StepNav back={back} next={next} title="Step 2 of 3 : Methods" />
+      <StepNav back={back} next={next} title={dictionary.dbuild.nav.step2} />
       <div className="md:items-center mb-2">
           <div className="mb-1">
             <Label 

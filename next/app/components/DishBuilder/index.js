@@ -20,7 +20,7 @@ const DishBuilder = () => {
   const [dish, setDish] = useState({ id:'', title:'', ingredients:[], methods:[], time_prep: 0, time_cook: 0, publishedby: username});
   const next = useCallback(() => setStep((prev) => prev + 1), []);
   const back = useCallback(() => setStep((prev) => prev - 1), []);
-  const errorsDefault = {time_cook: null, time_prep: null}
+  const errorsDefault = {time_cook: null, time_prep: null, title: "*Required"}
   const [errors, setErrors] = useState(errorsDefault);
 
   /**
@@ -41,12 +41,16 @@ const DishBuilder = () => {
     let errorMsg = "";
     switch (name) {
       case "time_cook":
-        errorMsg = validate(value);
+        errorMsg = validateTimings(value);
         setErrors((prevState) => ({ ...prevState, time_cook: errorMsg }));
         break;
       case "time_prep":
-        errorMsg = validate(value);
+        errorMsg = validateTimings(value);
         setErrors((prevState) => ({ ...prevState, time_prep: errorMsg }));
+        break;
+      case "title":
+        errorMsg = validateTitle(value);
+        setErrors((prevState) => ({ ...prevState, title: errorMsg }));
         break;
       default:
         break;
@@ -59,7 +63,7 @@ const DishBuilder = () => {
    * @param value - The change event value for validating.
    * 
    */
-  const validate = (value) => {
+  const validateTimings = (value) => {
     if (value !== "") {
       //if (time.length === 0) return "Time is empty";
       if (!NUMBERS_REGEX.digits.test(value)) return "Digits only";
@@ -68,6 +72,17 @@ const DishBuilder = () => {
     }
   };
   
+   /**
+   * Empty check on required title
+   * 
+   * @param value - The change event value for validating.
+   * 
+   */
+  const validateTitle = (value) => {
+      if (value.length === 0) return "Title is empty";
+      return "";
+  };
+
   /**
    * Handles changes to the form inputs and updates the dish state accordingly.
    * 
@@ -112,7 +127,6 @@ const DishBuilder = () => {
       // Clone the current dish to avoid mutating the original object
       const clone = { ...dish };
       // Update the pending dishes list immutably
-      // REDIRECTING ON REMOVING PILL
       setPendingDishes(prev => [...prev, { dish: clone }]);
       setDashboardDataStale(true);
       // Navigate to the dashboard page
@@ -130,19 +144,20 @@ const DishBuilder = () => {
             next={next} />)}
         {step === 2 && (
           <StepTwo
+            back={ back }
             dish={ dish }
             handleChange={ handleChange }
-            back={ back }
             next={ next } />)}
         {step === 3 && (
           <StepThree
+            back={back}
             dish={dish}
             handleChange={handleChange}
-            back={back}
             handleSubmit={handleSubmit}
             handleValidation={handleValidation}
             timeCookError={errors.time_cook} 
             timePrepError={errors.time_prep}
+            titleError={errors.title}
           />)}
       </form>
   );

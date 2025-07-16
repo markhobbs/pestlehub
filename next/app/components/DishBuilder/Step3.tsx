@@ -2,12 +2,13 @@
 "use client"
 
 import React, {ChangeEventHandler} from "react";
-import Heading from "@/components/Heading";
-import Label from "@/components/Label";
-import Input from "@/components/Input";
-import StepNav from "./StepNav";
-import CurrentIngredients from "../CurrentIngredients";
+import CurrentIngredients from "@/components/CurrentIngredients";
 import CurrentMethods from "@/components/CurrentMethods";
+import Heading from "@/components/Heading";
+import Input from "@/components/Input";
+import Label from "@/components/Label";
+import StepNav from "@/components/DishBuilder/StepNav";
+import dictionary from '@/data/dictionary.json';
 
 interface Ingredient {
   name: string;
@@ -35,10 +36,27 @@ interface StepThreeProps {
   dish: Dish;
   handleChange: () => void;
   handleSubmit: () => void;
-  handleValidation: ChangeEventHandler<HTMLInputElement>
+  handleValidation: ChangeEventHandler<HTMLInputElement>;
   timeCookError?: string | undefined;
   timePrepError?: string | undefined;
+  titleError?: string | undefined;
 }
+
+
+const SaveDishButton = (props: StepThreeProps) => {
+ const {handleSubmit, dish, timePrepError, timeCookError} = props;
+  return <button 
+    className="cursor-pointer rounded-md bg-emerald-700 mt-4 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:bg-stone-500" 
+    onClick={handleSubmit}
+    disabled={
+      dish.title === '' 
+      || dish.ingredients.length <= 0 
+      || dish.methods.length === 0 
+      || ((timePrepError && timePrepError.length > 0) && true) 
+      || ((timeCookError && timeCookError.length > 0) && true) }>
+    <span>Save</span>
+  </button>
+};
 
 const StepThree: React.FC<StepThreeProps> = React.memo(({ 
   back,
@@ -46,16 +64,21 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
   handleChange, 
   handleSubmit,
   handleValidation,
+  titleError,
   timeCookError,
   timePrepError
   }) => <>
-    <StepNav back={back} title="Step 3 of 3 : Review & Save" />
+    <StepNav back={back} title={dictionary.dbuild.nav.step3} />
     <div className="mb-2">
         <Label text="Title" element="title" />
         <Input element="title" 
-          onChange={handleChange} 
+          onChange={handleChange}
+          onBlur={handleValidation} 
           required={true} 
           text="Chicken Salad" />
+        <p className="text-red-600 dark:text-red-400 text-xs italic">
+        {titleError}
+        </p>
     </div>
     <div className="mb-2">
       <Heading Tag="h3" title="Ingredients" />
@@ -100,22 +123,11 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
         </p>
       </div>
     </div>
-  <button 
-    className="cursor-pointer rounded-md bg-emerald-700 mt-4 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:bg-stone-500" 
-    onClick={handleSubmit}
-    disabled={
-      dish.title === '' 
-      || dish.ingredients.length <= 0 
-      || dish.methods.length === 0 
-      || ((timePrepError && timePrepError.length > 0) && true) 
-      || ((timeCookError && timeCookError.length > 0) && true) }>
-    <span>Save</span>
-  </button> 
-  {(!dish.title || dish.ingredients.length <= 0 || dish.methods.length < 0) && 
-    <em className="ml-2 text-sm text-red-700">
-      <strong>1</strong> Ingredient, Method, and Title Required*
-    </em> 
-  }
+    <SaveDishButton 
+      handleSubmit={handleSubmit}
+      dish={dish}
+      timePrepError={timePrepError}
+      timeCookError={timeCookError} />
 </>);
 
 StepThree.displayName = 'StepThree';
