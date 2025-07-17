@@ -38,23 +38,22 @@ interface StepTwoProps {
 const StepTwo: React.FC<StepTwoProps> = React.memo(({ dish, handleChange, next, back }) => {
   const [heading, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
+  const {methods} = dish;
   
   const addMethod = useCallback((heading: string) => {
       if (!heading.trim()) return;
-      const updatedMethods: Method[] = [...dish.methods, { heading, body }];
+      const updatedMethods: Method[] = [...methods, { heading, body }];
       handleChange(updatedMethods);
       setTitle('');
       setBody('');
     },
-    [dish.methods, handleChange, body]
+    [methods, handleChange, body]
   );
   
   const deleteMethod = useCallback((heading: string) => {
-    const updatedMethods = dish.methods.filter(
-      (method) => method.heading.toLowerCase() !== heading.toLowerCase()
-    );
+    const updatedMethods = methods.filter((method) => method.heading.toLowerCase() !== heading.toLowerCase());
     handleChange(updatedMethods);
-  }, [dish.methods, handleChange]);
+  }, [methods, handleChange]);
 
   return (
     <>
@@ -91,9 +90,9 @@ const StepTwo: React.FC<StepTwoProps> = React.memo(({ dish, handleChange, next, 
           </button>
       </div>
 
-      {(dish.methods && dish.methods.length > 0) && <Heading Tag="h3" title={dictionary.dbuild.methodsTitle} />}
-      {(dish.methods && dish.methods.length > 0) && <ul className="list-disc mb-4 mt-4 pl-6" role="list">
-        {dish.methods.map((method, index) => <li key={index}>
+      {(methods && methods.length > 0) && <Heading Tag="h3" title={dictionary.dbuild.methodsTitle} />}
+      {(methods && methods.length > 0) && <ul className="list-disc mb-4 mt-4 pl-6" role="list">
+        {methods.map((method, index) => <li key={index}>
           <button onClick={() => deleteMethod(method.heading)}>
             <strong>{method.heading}</strong> : {method.body} 
           </button>
