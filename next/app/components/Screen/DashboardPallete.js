@@ -29,7 +29,7 @@ const DashboardPallete = () => {
     } else {
       setDashboardDataStale(true);
     }
-  }, [router, profile]);
+  }, [profile, router, setDashboardDataStale]);
 
   useEffect(() => { 
    const handlePendingDish = async (dish) => {
@@ -62,7 +62,7 @@ const DashboardPallete = () => {
     if (!submitted && profile && pendingDishes.length) {
         pendingDishes.forEach(dish => handlePendingDish({ "dishes" : [dish] }));
     }
-  }, [pendingDishes, setPendingDishes, submitted, setSubmitted, username, setDashboardDataStale, token, profile]);
+  }, [createDishesEndpoint, pendingDishes, profile, setDashboardDataStale, setPendingDishes, setSubmitted, submitted, token, username ]);
 
   useEffect(() => {
     if (profile && profile.username && isDashboardDataStale) {

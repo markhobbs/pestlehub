@@ -29,7 +29,7 @@ const Dashboard = ({data}: PropsInterface) => {
   const apiItemDelete = `${process.env.NEXT_PUBLIC_API_URI}/dish/user/${profile.username}`;
   const {token} = profile || {};
   
-  const handleDeleteDish = (item: any) => {
+  const handleDeleteDish = (item:{pid:{item:string}}) => {
     if (window.confirm("You are about to remove a Dish! Are you sure?") === true) {
       (async () => {
         const string = item.pid.item;

@@ -1,7 +1,7 @@
 // SearchList.tsx
 "use client"
 
-import React, {useState,useRef,ChangeEvent} from "react";
+import React, {useState, useRef, ChangeEvent} from "react";
 import Link from "next/link";
 import Label from "@/components/Label";
 import Input from "@/components/Input";

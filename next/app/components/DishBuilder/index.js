@@ -36,7 +36,7 @@ const DishBuilder = () => {
    * If `e` is a change event:
    * - Extracts the `name` and `value` from the event target and updates the corresponding field in the dish state.
    */
-  const handleValidation = (e) => {
+  const handleValidation = useCallback((e) => {
     const { name, value } = e.target || {};
     let errorMsg = "";
     switch (name) {
@@ -55,7 +55,7 @@ const DishBuilder = () => {
       default:
         break;
     }
-  };
+  }, []);
 
   /**
    * Assigns the Regex to the input value.
@@ -109,7 +109,7 @@ const DishBuilder = () => {
     }
     // Revalidate
     handleValidation(e);
-  }, []);
+  }, [handleValidation]);
 
   /**
    * Handles the form submission event.
@@ -132,7 +132,7 @@ const DishBuilder = () => {
       // Navigate to the dashboard page
       router.push("/pages/dashboard");
     },
-    [dish, setPendingDishes, router]
+    [dish, router, setDashboardDataStale, setPendingDishes]
   );
 
   return (
@@ -140,7 +140,7 @@ const DishBuilder = () => {
         {step === 1 && (
           <StepOne 
             dish={dish} 
-            handleChange={handleChange} 
+            handleChange={handleChange}
             next={next} />)}
         {step === 2 && (
           <StepTwo

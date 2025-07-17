@@ -4,7 +4,7 @@ import React from "react";
 interface ButtonProps {
   journey?: string;
   disabled?: boolean;
-  handleEvent: React.MouseEventHandler<HTMLButtonElement>;
+  handleEvent: React.MouseEventHandler<HTMLButtonElement>; 
 }
 
 const Button: React.FC<ButtonProps> = ({ journey, disabled, handleEvent }) => {

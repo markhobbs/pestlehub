@@ -76,8 +76,11 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
   }) => <>
     <StepNav back={back} title={dictionary.dbuild.nav.step3} />
     <div className="mb-2">
-        <Label text="Title" element="title" />
-        <Input element="title" 
+        <Label 
+          text="Title" 
+          element="title" />
+        <Input 
+          element="title" 
           onChange={handleChange}
           onBlur={handleValidation} 
           required={true} 
@@ -97,8 +100,8 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
     <Heading Tag="h3" title="Optional" />
     <div className="md:flex">
       <div className="mb-2 md:mr-2">
-        <Label 
-          text="Preperation Time (mins)" 
+        <Label
+          text={dictionary.dbuild.labels.timePrep}  
           element="time_prep" />
         <div className="relative">
           <Input 
@@ -114,9 +117,9 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
       </div>
       <div className="mb-2">
         <Label 
-          text="Cooking Time (mins)" 
+          text={dictionary.dbuild.labels.timeCook} 
           element="time_cook" />
-        <div className="relative">
+        <div className="relative"> 
           <Input 
             element="time_cook" 
             onChange={handleChange} 

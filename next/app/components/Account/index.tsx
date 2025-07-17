@@ -43,18 +43,30 @@ function Account({journey, activate}: AccountProps) {
   useEffect(() => {
     switch (journey) {
       case "Signup":
-        (errors.name || errors.email || errors.password)? setDisabled(true) : setDisabled(false);
+        if(errors.name || errors.email || errors.password) { 
+          setDisabled(true)
+        } else {
+          setDisabled(false)
+        }
         break;
       case "Login":
-        (errors.email || errors.password)? setDisabled(true) : setDisabled(false);
+        if(errors.email || errors.password) { 
+          setDisabled(true)
+        } else {
+          setDisabled(false)
+        }
         break;
       case "Recover":
-        (errors.email)? setDisabled(true) : setDisabled(false);
+        if(errors.email) { 
+          setDisabled(true)
+        } else {
+          setDisabled(false)
+        }
         break;
       default:
         break;
     }
-  }, [journey, errors]);
+  }, [disabled, errors, journey, setDisabled]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

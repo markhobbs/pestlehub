@@ -5,8 +5,8 @@ import Input from "@/components/Input";
 import Label from "@/components/Label";
 
 interface InputProps {
-  handleValidation: any;
-  handlePasswordChange: any;
+  handleValidation: React.FocusEventHandler<HTMLInputElement>;
+  handlePasswordChange: React.FocusEventHandler<HTMLInputElement>;
   passwordValue: string;
   passwordError: string;
 }
