@@ -6,12 +6,12 @@ export const DishContext = createContext("");
 
 export const DishProvider = ({children }) => {
     const [isStale, setStale] = useState(false);
-    const [Dishes, setDishes] = useState([]);
+    const [dishes, setDishes] = useState([]);
     const [inputs, setInputs] = useState();
     return <DishContext.Provider value={{ 
             inputs,
             isStale,
-            Dishes,
+            dishes,
             setInputs,
             setStale, 
             setDishes,

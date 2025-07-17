@@ -16,7 +16,7 @@ const Dashboard = () => {
   const {
     inputs,
     setInputs,
-    Dishes,
+    dishes,
     setDishes,
     isStale,
     setStale,
