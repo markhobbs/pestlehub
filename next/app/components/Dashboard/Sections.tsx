@@ -1,12 +1,12 @@
-/* Dashboard.js */
+/* dashboard/Sections.js */
 
 import React, { useContext } from "react";
 import Link from "next/link"
 import { useRouter } from "next/navigation";
-import { ProfileContext } from '@/ContextProvider/ProfileProvider';
-import { DishContext } from  '@/ContextProvider/DishProvider';
 import Heading from "@/components/Heading";
 import { NoBookmarks, NoCreations } from "@/components/Snippets";
+import { ProfileContext } from '@/ContextProvider/ProfileProvider';
+import { DishContext } from  '@/ContextProvider/DishProvider';
 import dictionary from '@/data/dictionary.json';
 
 interface ProfileInterface {
@@ -23,7 +23,7 @@ interface PropsInterface {
   }
 }
 
-const Dashboard = ({data}: PropsInterface) => {
+const Sections = ({data}: PropsInterface) => {
   const router = useRouter();
   const { profile } = useContext(ProfileContext) as unknown as ProfileInterface;
   const { setStale } = useContext(DishContext) as unknown as ProfileInterface;
@@ -84,7 +84,6 @@ const Dashboard = ({data}: PropsInterface) => {
         </Link> <ButtonDeleteItem item={item.pID} />
     </li>)
     }</ul> : <NoCreations />}
-
     <DashBoardLinks />
   </>
 };
@@ -99,6 +98,6 @@ const DashBoardLinks = () => {
   </p>
 }
 
-Dashboard.displayName = 'Dashboard';
-export default Dashboard;
+Sections.displayName = 'Sections';
+export default Sections;
 

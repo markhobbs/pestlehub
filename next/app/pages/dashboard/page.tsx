@@ -1,12 +1,12 @@
 // Dashboard.tsx
 import React from "react";
 import Heading from "@/components/Heading";
-import DashboardPallete from "@/components/Screen/DashboardPallete";
+import Screen from "@/components/Dashboard/Screen";
 
 const Dashboard: React.FC = () => {
   return <main className="dark:text-white">
       <Heading Tag="h2" title="Dashboard" />
-      <DashboardPallete />
+      <Screen />
     </main>};
 
 export default Dashboard;

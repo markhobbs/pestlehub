@@ -1,27 +1,27 @@
-// DashboardPallete.tsx
+// DashboardSections.tsx
 "use client"
 
-import React, {useEffect, useState, useContext} from "react";
+import {useEffect, useState, useContext} from "react";
 import {useRouter} from "next/navigation";
 import {ProfileContext} from '@/ContextProvider/ProfileProvider';
 import {DishContext} from '@/ContextProvider/DishProvider';
 import dictionary from '@/data/dictionary.json';
 import Button from "@/components/Button";
-import Dashboard from "@/components/Dashboard";
+import Sections from "@/components/Dashboard/Sections";
 import ListPending from "@/components/Lists/ListPending";
 import {NoUserAccount, Inspiration} from "@/components/Snippets";
 
-const DashboardPallete = () => {
+const Screen = () => {
   const router = useRouter();
   const {profile} = useContext(ProfileContext);
-  const {Dishes, setStale, setDishes, isStale} = useContext(DishContext);
+  const {dishes, setStale, setDishes, isStale} = useContext(DishContext);
   const [userData, setUserData] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [response, setResponse] = useState([]);
   const {username, token} = profile || {};
   const rootEndpoint = `${process.env.NEXT_PUBLIC_API_URI}`;
   const getDishesEndpoint = `${rootEndpoint}/dish/user/${username}`;
-  const SaveDishesEndpoint = `${rootEndpoint}/dishes`;
+  const saveDishesEndpoint = `${rootEndpoint}/dishes`;
   
   useEffect(() => {
     if(!profile) {
@@ -34,7 +34,7 @@ const DashboardPallete = () => {
   useEffect(() => { 
    const handleSaveDish = async (dish) => {
       try {
-        fetch(`${SaveDishesEndpoint}`, {
+        fetch(`${saveDishesEndpoint}`, {
           method: "POST", 
           headers: {
               'Authorization' : 'Bearer ' + token,
@@ -59,10 +59,10 @@ const DashboardPallete = () => {
         console.error('Error fetching search', error);
       }
     };
-    if (!submitted && profile && Dishes.length) {
-        Dishes.forEach(dish => handleSaveDish({ "dishes" : [dish] }));
+    if (!submitted && profile && dishes.length) {
+        dishes.forEach(dish => handleSaveDish({ "dishes" : [dish] }));
     }
-  }, [SaveDishesEndpoint, Dishes, profile, setStale, setDishes, setSubmitted, submitted, token, username]);
+  }, [saveDishesEndpoint, dishes, profile, setStale, setDishes, setSubmitted, submitted, token, username]);
 
   useEffect(() => {
     if (profile && profile.username && isStale) {
@@ -102,12 +102,12 @@ const DashboardPallete = () => {
   return (profile && profile.username) 
     ? <>
         {response.length > 0 && <p>{response}</p>}
-        <Dashboard data={userData} />
-        <ListPending dishes={Dishes} />
+        <Sections data={userData} />
+        <ListPending dishes={dishes} />
         <LogOutButton /> 
         <Inspiration />
       </>
     : <NoUserAccount />};
 
-DashboardPallete.displayName = 'DashboardPallete';
-export default DashboardPallete;
+Screen.displayName = 'Screen';
+export default Screen;
