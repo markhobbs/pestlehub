@@ -2,21 +2,21 @@
   "meta": {
     "title": "PestleHub"
   },
-  "pages" : {
+  "pages": {
     "about":{
       "heroHeading": "Hey there, food enthusiast!",
       "heroPara": "Welcome to PestleHub. We're all about culinary creativity and community.",
       "featuresHeading": "Features",
       "featuresPara": "Explore our diverse selection of ingredients to inspire your next culinary adventure.",
-      "featuresPara2" : "Get creative! Use our tools to customize and create your unique recipes.",
+      "featuresPara2": "Get creative! Use our tools to customize and create your unique recipes.",
       "featuresRegHeading": "Features upon Registration",
       "featuresRegPara": "Keep track of the dishes you love by saving them for later use.",
       "joinPara": "Join us today and let’s whip up some deliciousness."
     }
   },
   "config" : {
-    "email" : "query@pestlehub.com",
-    "loggedOut" : "Successfully logged out",
+    "email": "query@pestlehub.com",
+    "loggedOut": "Successfully logged out",
     "checkEmail": "An Activation Email has been sent to your registered email address.",
     "checkJunk": "If after 10 mins you haven't recieved your activation email. Please check your email clients spam folder.",
     "headingdDishSpices": "Herb, Seasoning, or Spice",
@@ -29,7 +29,7 @@
     "headingDashboard": "Dashboard",
     "bookmarks": "Bookmarks",
     "creations": "Creations",
-    "noCreations" : "No Creations.",
+    "noCreations": "No Creations.",
     "headingDishBuilder": "Dish Builder",
     "noBookmarks": "No Bookmarks.",
     "dishCreateListEmpty": "Currently No Dishes Created",
@@ -74,15 +74,17 @@
       "step3": "Step 3 of 3 : Review & Save"
     },
     "labels": {
-      "timeCook" : "Cooking time in minutes",
-      "timePrep" : "Preperation time in minutes" 
+      "timeCook": "Cooking time in minutes",
+      "timePrep": "Preperation time in minutes" 
     }
   },
   "snippets" : {
-    "noIngredients" : "Currently no ingredients. At least one ingredient is required.",
-    "noMethods" : "Currently No Methods. At least one method is required.",
+    "noBookmarks": "No Bookmarks",
+    "noCreations": "No Creations",
+    "noIngredients": "Currently no ingredients. At least one ingredient is required.",
+    "noMethods": "Currently No Methods. At least one method is required.",
     "forgottenPassword" : "Forgot Password?",
-    "noAccount" : "Unable to locate Account! Please try the ",
+    "noAccount": "Unable to locate Account! Please try the ",
     "inspiration": {
       "link": "Search",
       "additional": "for a Spice."

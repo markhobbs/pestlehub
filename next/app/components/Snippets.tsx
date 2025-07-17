@@ -10,6 +10,14 @@ export function ForgottenPassword() {
   </Link>
 };
 
+export function NoBookmarks() {
+  return <p className="mb-4">{dictionary.snippets.noBookmarks}</p>
+};
+
+export function NoCreations() {
+  return <p className="mb-4">{dictionary.snippets.noCreations}</p>
+};
+
 export function NoIngredients() {
   return <div 
     className="bg-red-100 border border-red-600 text-red-700 px-4 py-3 rounded relative" 

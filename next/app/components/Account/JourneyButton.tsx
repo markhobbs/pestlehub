@@ -1,13 +1,13 @@
 // Button.tsx
 import React from "react";
 
-interface ButtonProps {
+interface JourneyButtonProps {
   journey?: string;
   disabled?: boolean;
   handleEvent: React.MouseEventHandler<HTMLButtonElement>; 
 }
 
-const Button: React.FC<ButtonProps> = ({ journey, disabled, handleEvent }) => {
+const JourneyButton: React.FC<JourneyButtonProps> = ({ journey, disabled, handleEvent }) => {
   return <button
     className="cursor-pointer rounded-md bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:bg-stone-500"
     value={journey}
@@ -18,5 +18,5 @@ const Button: React.FC<ButtonProps> = ({ journey, disabled, handleEvent }) => {
     {journey}
   </button>}
 
-Button.displayName = 'Button';
-export default Button;
+JourneyButton.displayName = 'JourneyButton';
+export default JourneyButton;

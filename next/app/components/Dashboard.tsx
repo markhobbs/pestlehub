@@ -5,11 +5,12 @@ import Link from "next/link"
 import { useRouter } from "next/navigation";
 import { ProfileContext } from '@/ContextProvider/ProfileProvider';
 import { DishContext } from  '@/ContextProvider/DishProvider';
-import dictionary from '@/data/dictionary.json';
 import Heading from "@/components/Heading";
+import { NoBookmarks, NoCreations } from "@/components/Snippets";
+import dictionary from '@/data/dictionary.json';
 
 interface ProfileInterface {
-  setDashboardDataStale: any;
+  setStale: any;
   profile: {
     token?: string;
     username?: string;
@@ -25,7 +26,7 @@ interface PropsInterface {
 const Dashboard = ({data}: PropsInterface) => {
   const router = useRouter();
   const { profile } = useContext(ProfileContext) as unknown as ProfileInterface;
-  const { setDashboardDataStale } = useContext(DishContext) as unknown as ProfileInterface;
+  const { setStale } = useContext(DishContext) as unknown as ProfileInterface;
   const apiItemDelete = `${process.env.NEXT_PUBLIC_API_URI}/dish/user/${profile.username}`;
   const {token} = profile || {};
   
@@ -41,7 +42,7 @@ const Dashboard = ({data}: PropsInterface) => {
               'Content-Type': 'application/json'
           }})
           .then(() => {
-            setDashboardDataStale(true);
+            setStale(true);
             router.push("/pages/dashboard");
           })
           .catch((error) => {
@@ -69,7 +70,7 @@ const Dashboard = ({data}: PropsInterface) => {
             {item.title}
           </Link>
       </li>)
-    }</ul> : <p className="mb-4">No Bookmarks</p>}
+    }</ul> : <NoBookmarks />}
 
     <Heading Tag="h3" title={dictionary.config.creations} />
     {data['creations'] && data['creations'].length ? <ul 
@@ -82,7 +83,7 @@ const Dashboard = ({data}: PropsInterface) => {
           {item.title}
         </Link> <ButtonDeleteItem item={item.pID} />
     </li>)
-    }</ul> : "No Creations"}
+    }</ul> : <NoCreations />}
 
     <DashBoardLinks />
   </>

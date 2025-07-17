@@ -16,16 +16,16 @@ const Dashboard = () => {
   const {
     inputs,
     setInputs,
-    pendingDishes,
-    setPendingDishes,
-    isDashboardDataStale,
-    setDashboardDataStale,
+    Dishes,
+    setDishes,
+    isStale,
+    setStale,
   } = useDish();
 
   return (
     <div>
       <h2>{inputs?.heading || 'No dish selected'}</h2>
-      <button onClick={() => setDashboardDataStale(true)}>Mark Dashboard Stale</button>
+      <button onClick={() => setStale(true)}>Mark Dashboard Stale</button>
     </div>
   );
 };

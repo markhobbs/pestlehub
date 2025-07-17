@@ -10,7 +10,7 @@ import PasswordInputFieldConfirm from "@/components/Account/PasswordInputFieldCo
 import NameInputField from "@/components/Account/NameInputField";
 import EmailInputField from "@/components/Account/EmailInputField";
 import TokenInputField from "@/components/Account/TokenInputField";
-import Button2 from "@/components/Button2";
+import JourneyButton from "@/components/Account/JourneyButton";
 import {ForgottenPassword} from "@/components/Snippets";
 import dictionary from '@/data/dictionary.json';
 
@@ -222,11 +222,10 @@ function Account({journey, activate}: AccountProps) {
             handleValidation={handleValidation}
             confirmPasswordValue={formState.confirmPassword}
             confirmPasswordError={errors.confirmPassword} /> )}
-        <Button2 
+        <JourneyButton 
           journey={journey} 
           disabled={disabled} 
           handleEvent={(e: any) => handleEvent(e)} />
-          {' '}
           {journey !== "Recover" && <ForgottenPassword />}
     </div>
   );

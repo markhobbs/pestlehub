@@ -14,27 +14,27 @@ import {NoUserAccount, Inspiration} from "@/components/Snippets";
 const DashboardPallete = () => {
   const router = useRouter();
   const {profile} = useContext(ProfileContext);
-  const {pendingDishes, setDashboardDataStale, setPendingDishes, isDashboardDataStale} = useContext(DishContext);
+  const {Dishes, setStale, setDishes, isStale} = useContext(DishContext);
   const [userData, setUserData] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [response, setResponse] = useState([]);
   const {username, token} = profile || {};
   const rootEndpoint = `${process.env.NEXT_PUBLIC_API_URI}`;
   const getDishesEndpoint = `${rootEndpoint}/dish/user/${username}`;
-  const createDishesEndpoint = `${rootEndpoint}/dishes`;
+  const SaveDishesEndpoint = `${rootEndpoint}/dishes`;
   
   useEffect(() => {
     if(!profile) {
       router.push('/login');
     } else {
-      setDashboardDataStale(true);
+      setStale(true);
     }
-  }, [profile, router, setDashboardDataStale]);
+  }, [profile, router, setStale]);
 
   useEffect(() => { 
-   const handlePendingDish = async (dish) => {
+   const handleSaveDish = async (dish) => {
       try {
-        fetch(`${createDishesEndpoint}`, {
+        fetch(`${SaveDishesEndpoint}`, {
           method: "POST", 
           headers: {
               'Authorization' : 'Bearer ' + token,
@@ -48,9 +48,9 @@ const DashboardPallete = () => {
             }
             return response.json();
           })
-          .then(() => setDashboardDataStale(true))
+          .then(() => setStale(true))
           .then((data) => setResponse((prevResponse) => [...prevResponse, data]))
-          .then(() => setPendingDishes([]))
+          .then(() => setDishes([]))
           .then(() => setSubmitted(true))
           .catch((error) => {
             console.log(` ${error.message}`);
@@ -59,13 +59,13 @@ const DashboardPallete = () => {
         console.error('Error fetching search', error);
       }
     };
-    if (!submitted && profile && pendingDishes.length) {
-        pendingDishes.forEach(dish => handlePendingDish({ "dishes" : [dish] }));
+    if (!submitted && profile && Dishes.length) {
+        Dishes.forEach(dish => handleSaveDish({ "dishes" : [dish] }));
     }
-  }, [createDishesEndpoint, pendingDishes, profile, setDashboardDataStale, setPendingDishes, setSubmitted, submitted, token, username ]);
+  }, [SaveDishesEndpoint, Dishes, profile, setStale, setDishes, setSubmitted, submitted, token, username]);
 
   useEffect(() => {
-    if (profile && profile.username && isDashboardDataStale) {
+    if (profile && profile.username && isStale) {
       const getData  = async (getDishesEndpoint) => {
         fetch(getDishesEndpoint, { 
           method: "GET", 
@@ -81,14 +81,14 @@ const DashboardPallete = () => {
           return response.json();
         })
         .then((json) => setUserData(json.user))
-        .then(() => setDashboardDataStale(false))
+        .then(() => setStale(false))
         .catch((error) => {
           console.log(` ${error.message}`);
         });
       };
       getData(getDishesEndpoint);
     }
-  }, [username, token, getDishesEndpoint, isDashboardDataStale, setDashboardDataStale, setUserData, profile]);
+  }, [username, token, getDishesEndpoint, isStale, setStale, setUserData, profile]);
   
   const LogOutButton = () => {
     return <Button
@@ -103,7 +103,7 @@ const DashboardPallete = () => {
     ? <>
         {response.length > 0 && <p>{response}</p>}
         <Dashboard data={userData} />
-        <ListPending dishes={pendingDishes} />
+        <ListPending dishes={Dishes} />
         <LogOutButton /> 
         <Inspiration />
       </>
