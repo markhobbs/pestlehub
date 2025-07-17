@@ -50,7 +50,7 @@ interface SaveDishProps {
 }
 
 const SaveDishButton = (props: SaveDishProps) => {
- const {dish, handleSubmit, timeCookError, timePrepError} = props;
+ const {dish, handleSubmit, timeCookError, timePrepError} = props || {};
   return <button 
     className="cursor-pointer rounded-md bg-emerald-700 mt-4 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:bg-stone-500" 
     onClick={handleSubmit}

@@ -39,7 +39,7 @@ const Dish: React.FC<StepOneProps> = () => {
 };
   
 const StepOne: React.FC<StepOneProps> = React.memo(({ dish, handleChange, next }) => {
-    const { ingredients } = dish;
+    const { ingredients } = dish || {};
     
     const addIngredient = useCallback((
         ingredientName: string, 
