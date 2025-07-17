@@ -6,8 +6,10 @@ import Input from "@/components/Input";
 import Select from "@/components/Select";
 import Label from "@/components/Label";
 import ingredients from '@/data/ingredients.json'
+import dictionary from '@/data/dictionary.json';
 import states from '@/data/states.json'
 import units from '@/data/units.json'
+import {SelectListSVG} from "../../../public/SVGs";
 
 interface SearchProps {
   onAddIngredient: (
@@ -42,13 +44,13 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
       {(query && query.length > 0 && ingredients.length) && <ul>
         {ingredients
           .filter(ingredient => ingredient.name.toLowerCase().match(query))
-          .map((filtered, index) => index < 10 && ( // <= only 5 items
+          .map((filtered, index) => index < 5 && ( // <= only 5 items
             <li className="inline-flex" key={filtered.ingredient_ID}>
-            <button
-              className="cursor-pointer bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
-              onClick={(e) => handleAdd(e, filtered.name)}>
-              {filtered.name}
-            </button>
+              <button
+                className="cursor-pointer bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
+                onClick={(e) => handleAdd(e, filtered.name)}>
+                {filtered.name}
+              </button>
           </li>)
         )}
       </ul>}
@@ -59,13 +61,19 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
       <div>
         <div className="md:flex md:items-center"> 
           <div className="mb-2">
-            <Label text="Search" element="search" />
+            <Label 
+              text="Search" 
+              element={dictionary.dbuild.labels.search} />
             <Input 
               element="search" 
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery((e.target.value).toLowerCase())} text="Red Cabbage" />
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
+                setQuery((e.target.value).toLowerCase())} text="Red Cabbage" 
+              />
           </div>
           <div className="mb-2 md:ml-2">
-            <Label text="Units" element="units" />   
+            <Label 
+              text="Units" 
+              element={dictionary.dbuild.labels.units} />  
             <div className="relative">
               <Select 
                 element="units" 
@@ -78,13 +86,11 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
             <Label text="State" element="state" /> 
             <div className="relative">
               <Select 
-                element="state" 
+                element={dictionary.dbuild.labels.states}
                 onChange={handleStateChange}
                 items={states} 
                 value={selectedState} />
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.2" stroke="currentColor" className="h-5 w-5 absolute top-2.5 right-2.5 text-slate-700">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-              </svg>
+                <SelectListSVG />
             </div>
           </div>
         </div>

@@ -11,13 +11,13 @@ import units from '@/data/units.json'
 
 interface Dish {
     title: string;
-    ingredients: Ingredient[];
+    ingredients: Ingredients[];
     methods: Method[];
     time_prep?: number;
     time_cook?: number;
     publishedby: string;
 }
-interface Ingredient {
+interface Ingredients {
     name: string;
     quantity: number;
     unit_ID?: number;
@@ -29,7 +29,7 @@ interface Method {
 }
 interface StepOneProps {
     dish: Dish;
-    handleChange: (e: ChangeEvent<HTMLInputElement> | Ingredient[] | Method[]) => void;
+    handleChange: (e: ChangeEvent<HTMLInputElement> | Ingredients[] | Method[]) => void;
     next?: () => void;
     back?: () => void;
 }
@@ -39,6 +39,8 @@ const Dish: React.FC<StepOneProps> = () => {
 };
   
 const StepOne: React.FC<StepOneProps> = React.memo(({ dish, handleChange, next }) => {
+    const { ingredients } = dish;
+    
     const addIngredient = useCallback((
         ingredientName: string, 
         quantity: number, 
@@ -46,11 +48,13 @@ const StepOne: React.FC<StepOneProps> = React.memo(({ dish, handleChange, next }
         state_ID: number) => {
 
         if (!ingredientName.trim()) return;
+
+        const ingredientExists = ingredients.find((ingredient) => ingredient.name.toLowerCase() === ingredientName.toLowerCase());
+        let ingredientsBuilder: Ingredients[];
         
-        const existingIngredient = dish.ingredients.find((ingredient) => ingredient.name.toLowerCase() === ingredientName.toLowerCase());
-        let updatedIngredients: Ingredient[];
-        if (existingIngredient) {
-            updatedIngredients = dish.ingredients.map((ingredient) =>
+        if (ingredientExists) {
+            // If ingredient exists update quantity and state only 
+            ingredientsBuilder = ingredients.map((ingredient) =>
                 ingredient.name.toLowerCase() === ingredientName.toLowerCase() ? { 
                     ...ingredient, 
                     quantity: ingredient.quantity + 1, 
@@ -58,27 +62,36 @@ const StepOne: React.FC<StepOneProps> = React.memo(({ dish, handleChange, next }
                     state_ID: state_ID || ingredient.state_ID
                 } : ingredient);
         } else {
-            const newIngredient: Ingredient = { 
+            // Else append the ingredient to dish ingredients 
+            const ingredientNew: Ingredients = { 
                 name: ingredientName, 
                 quantity: quantity, 
                 unit_ID: unit_ID,
                 state_ID: state_ID};
-            updatedIngredients = [...dish.ingredients, newIngredient];
+            ingredientsBuilder = [...ingredients, ingredientNew];
         }
-        handleChange(updatedIngredients);
-    }, [dish.ingredients, handleChange]);
+        handleChange(ingredientsBuilder);
+        
+    }, [ingredients, handleChange]);
 
     const deleteIngredient = useCallback((ingredientName: string) => {
-        const updatedIngredients = dish.ingredients.filter((ingredient) => ingredient.name.toLowerCase() !== ingredientName.toLowerCase());
-        handleChange(updatedIngredients);
-    }, [dish.ingredients, handleChange]);
+        // If ingredient exists delete from dish ingredients.
+        const ingredientDelete = ingredients.filter((ingredient) => ingredient.name.toLowerCase() !== ingredientName.toLowerCase());
+        if (ingredientDelete.length > 0 ) {
+            handleChange(ingredientDelete);
+        }
+    }, [dish, handleChange]);
 
     return <>
         <StepNav next={next} title={dictionary.dbuild.nav.step1} />
         <Search onAddIngredient={addIngredient} />
-        {dish.ingredients.length > 0 && <Heading Tag="h3" title="Current Ingredients" />}
-        {dish.ingredients && <ul>
-            {dish.ingredients.map((ingredient, index) => <li key={index} className="inline-flex">
+        {ingredients.length > 0 && <Heading 
+            Tag="h3"
+            title={dictionary.dbuild.ingredientsTitle} />}
+        {ingredients && <ul>
+            {ingredients.map((ingredient, index) => <li 
+                key={index} 
+                className="inline-flex">
                 <button 
                     className="cursor-pointer bg-red-700 hover:bg-red-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
                     onClick={() => deleteIngredient(ingredient.name)}>- <sup>{ingredient.quantity}</sup>{units

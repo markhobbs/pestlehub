@@ -90,7 +90,8 @@ const StepTwo: React.FC<StepTwoProps> = React.memo(({ dish, handleChange, next, 
             <span>+ Add Method</span>
           </button>
       </div>
-      {(dish.methods && dish.methods.length > 0) && <Heading Tag="h3" title="Current Methods" />}
+
+      {(dish.methods && dish.methods.length > 0) && <Heading Tag="h3" title={dictionary.dbuild.methodsTitle} />}
       {(dish.methods && dish.methods.length > 0) && <ul className="list-disc mb-4 mt-4 pl-6" role="list">
         {dish.methods.map((method, index) => <li key={index}>
           <button onClick={() => deleteMethod(method.heading)}>

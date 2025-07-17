@@ -90,14 +90,20 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
         </p>
     </div>
     <div className="mb-2">
-      <Heading Tag="h3" title="Ingredients" />
+      <Heading 
+        Tag="h3" 
+        title={dictionary.dbuild.ingredientsTitle} />
       <CurrentIngredients dish={dish} />
     </div>
     <div className="mb-2">
-      <Heading Tag="h3" title="Methods" /> 
+      <Heading 
+        Tag="h3" 
+        title={dictionary.dbuild.methodsTitle} />
       <CurrentMethods dish={dish} />
     </div>
-    <Heading Tag="h3" title="Optional" />
+    <Heading 
+      Tag="h3" 
+      title={dictionary.dbuild.optionalTitle} />
     <div className="md:flex">
       <div className="mb-2 md:mr-2">
         <Label
