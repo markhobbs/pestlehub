@@ -66,9 +66,8 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
               element={dictionary.dbuild.labels.search} />
             <Input 
               element="search" 
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
-                setQuery((e.target.value).toLowerCase())} text="Red Cabbage" 
-              />
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery((e.target.value).toLowerCase())} 
+              text={dictionary.dbuild.placeholders.search}  />
           </div>
           <div className="mb-2 md:ml-2">
             <Label 
