@@ -61,22 +61,22 @@ const StepTwo: React.FC<StepTwoProps> = React.memo(({ dish, handleChange, next, 
       <StepNav back={back} next={next} title={dictionary.dbuild.nav.step2} />
       <div className="md:items-center mb-2">
           <div className="mb-1">
-            <Label 
-              text="Title" 
+            <Label
+              text={dictionary.dbuild.labels.title}
               element="title" />
             <Input 
               element="title" 
               onChange={(e) => setTitle(capitalizeFirst(e.target.value))} 
-              text="Step 1 : Prepare the Paste" />
+              text={dictionary.dbuild.placeholders.title} />
           </div>
         </div>
         <div>
           <div className="mb-1">
             <Label 
-              text="Method" 
+              text={dictionary.dbuild.labels.method}
               element="body" />
             <TextArea 
-              text="Press the pestle against the spices to grind them to a desired consistency." 
+              text={dictionary.dbuild.placeholders.method} 
               element="body"
               onChange={(e) => setBody(capitalizeFirst(e.target.value))} />
           </div>
@@ -90,7 +90,8 @@ const StepTwo: React.FC<StepTwoProps> = React.memo(({ dish, handleChange, next, 
             <span>+ Add Method</span>
           </button>
       </div>
-      {(dish.methods && dish.methods.length > 0) && <Heading Tag="h3" title="Current Methods" />}
+
+      {(dish.methods && dish.methods.length > 0) && <Heading Tag="h3" title={dictionary.dbuild.methodsTitle} />}
       {(dish.methods && dish.methods.length > 0) && <ul className="list-disc mb-4 mt-4 pl-6" role="list">
         {dish.methods.map((method, index) => <li key={index}>
           <button onClick={() => deleteMethod(method.heading)}>

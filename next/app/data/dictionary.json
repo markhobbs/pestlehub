@@ -68,15 +68,28 @@
     "removeSection": "Remove Section"
   },
   "dbuild": {
+    "ingredientsTitle" : "Current Ingredients",
+    "labels": {
+      "method": "Method",
+      "states": "States",
+      "search": "Search",
+      "timeCook": "Cooking time in minutes",
+      "timePrep": "Preperation time in minutes",
+      "title": "Title",
+      "units": "Units"
+    },
+    "placeholders": {
+      "method": "Press the pestle against the spices to grind them to a desired consistency.",
+      "title": "Step 1 : Prepare the Paste",
+      "search": "Red Cabbage"
+    },
+    "methodsTitle" : "Current Methods",
     "nav": {
       "step1": "Step 1 of 3 : Ingredients",
       "step2": "Step 2 of 3 : Methods",
       "step3": "Step 3 of 3 : Review & Save"
     },
-    "labels": {
-      "timeCook": "Cooking time in minutes",
-      "timePrep": "Preperation time in minutes" 
-    }
+    "optionalTitle" : "Optional"
   },
   "snippets" : {
     "noBookmarks": "No Bookmarks",
