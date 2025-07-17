@@ -38,7 +38,7 @@ interface StepTwoProps {
 const StepTwo: React.FC<StepTwoProps> = React.memo(({ dish, handleChange, next, back }) => {
   const [heading, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
-  const {methods} = dish;
+  const {methods} = dish || {};
   
   const addMethod = useCallback((heading: string) => {
       if (!heading.trim()) return;
