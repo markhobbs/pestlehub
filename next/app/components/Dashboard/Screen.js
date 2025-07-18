@@ -13,7 +13,6 @@ import {NoUserAccount, Inspiration} from "@/components/Snippets";
 const Screen = () => {
   const {profile} = useContext(ProfileContext);
   const {dashboard, dishes, setStale, setDashboard, setDishes, isStale} = useContext(DishContext);
-  const [submitted, setSubmitted] = useState(false);
   const [response, setResponse] = useState([]);
   const {username, token} = profile || {};
   const rootEndpoint = `${process.env.NEXT_PUBLIC_API_URI}`;
@@ -21,7 +20,7 @@ const Screen = () => {
   const saveDishesEndpoint = `${rootEndpoint}/dishes`;
 
   useEffect(() => { 
-    if (profile && profile.username && isStale) {
+    if (username && isStale) {
       const setData = async (dish) => {
         try {
           fetch(`${saveDishesEndpoint}`, {
@@ -38,7 +37,6 @@ const Screen = () => {
               }
               return response.json();
             })
-            .then(() => setSubmitted(true))
             .then(() => setStale(true))
             .then((data) => setResponse((prevResponse) => [...prevResponse, data]))
             .then(() => setDishes([]))
@@ -49,14 +47,12 @@ const Screen = () => {
           console.error('Error fetching search', error);
         }
       };
-      if (!submitted) {
-        setTimeout(function () {dishes.forEach(dish => setData({ "dishes" : [dish] }))}, 2000);
-      }
+      setTimeout(function () {dishes.forEach(dish => setData({ "dishes" : [dish] }))}, 2000);
     } 
-  }, [saveDishesEndpoint, dishes, profile, setStale, setDishes, setSubmitted, submitted, token, username]);
+  }, [saveDishesEndpoint, dishes, setStale, setDishes, token, username]);
 
   useEffect(() => {
-    if (profile && profile.username && isStale) {
+    if (username && isStale) {
       const getData  = async (getDishesEndpoint) => {
         fetch(getDishesEndpoint, { method: "GET", headers: {
             'Authorization' : 'Bearer ' + token,
@@ -77,7 +73,7 @@ const Screen = () => {
       };
       getData(getDishesEndpoint);
     } 
-  }, [username, token, getDishesEndpoint, isStale, setStale, setDashboard, profile]);
+  }, [username, token, getDishesEndpoint, isStale, setStale, setDashboard]);
   
   const LogOutButton = () => {
     return <Button
