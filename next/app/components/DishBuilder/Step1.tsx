@@ -94,15 +94,15 @@ const StepOne: React.FC<StepOneProps> = React.memo(({ dish, handleChange, next }
                 className="inline-flex">
                 <button 
                     className="cursor-pointer bg-red-700 hover:bg-red-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
-                    onClick={() => deleteIngredient(ingredient.name)}>- <sup>{ingredient.quantity}</sup>{units
+                    onClick={() => deleteIngredient(ingredient.name)}><sup>{ingredient.quantity}</sup>{units
                     .filter((unit) => 
                         Number(unit.index) === ingredient.unit_ID 
                         && Number(unit.index) !== -1)
                     .map((unit, i) => <sup key={i}>{unit.code}</sup>)
                     } {ingredient.name} {states.filter((state) => 
                     Number(state.index) === ingredient.state_ID
-                    && Number(state.index) !== -1).map((state) => <sup key={state.index}>{state.name}</sup>)}
-                </button>
+                    && Number(state.index) !== -1).map((state) => <sup key={state.index}>{state.name}</sup> )} x 
+               </button>
             </li>)}
         </ul>}
     </>});
