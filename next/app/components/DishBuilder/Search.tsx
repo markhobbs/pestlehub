@@ -9,7 +9,9 @@ import ingredients from '@/data/ingredients.json'
 import dictionary from '@/data/dictionary.json';
 import states from '@/data/states.json'
 import units from '@/data/units.json'
+import {capitalizeFirst} from "@/utils/shared";
 import {SelectListSVG} from "../../../public/SVGs";
+
 
 interface SearchProps {
   onAddIngredient: (
@@ -42,6 +44,13 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
   const SearchResults = () => {
     return (ingredients.length > 0) && <>
       {(query && query.length > 0 && ingredients.length) && <ul>
+        <li className="inline-flex" key={-1}>
+          <button
+            className="cursor-pointer bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
+            onClick={(e) => handleAdd(e, query)}>
+            {capitalizeFirst(query)}
+          </button>
+        </li>
         {ingredients
           .filter(ingredient => ingredient.name.toLowerCase().match(query))
           .map((filtered, index) => index < 5 && ( // <= only 5 items
@@ -56,16 +65,6 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
       </ul>}
     </>
   };
-
-  const Search = () => <div className="mb-2">
-    <Label 
-      text={dictionary.dbuild.labels.search} 
-      element={dictionary.dbuild.elements.search} />
-    <Input 
-      element={dictionary.dbuild.elements.search}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery((e.target.value).toLowerCase())} 
-      text={dictionary.dbuild.placeholders.search}  />
-  </div>
 
   const Units = () => <div className="mb-2 md:ml-2">
     <Label 
@@ -102,7 +101,15 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
   return <div>
     <div>
       <div className="md:flex md:items-center"> 
-        <Search />
+        <div className="mb-2">
+          <Label 
+            text={dictionary.dbuild.labels.search} 
+            element={dictionary.dbuild.elements.search} />
+          <Input 
+            element={dictionary.dbuild.elements.search}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery((e.target.value).toLowerCase())} 
+            text={dictionary.dbuild.placeholders.search}  />
+        </div>
         <Units />
         <States />
       </div>

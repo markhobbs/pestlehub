@@ -129,8 +129,10 @@ const DishBuilder = () => {
       // Update the pending dishes list immutably
       setDishes(prev => [...prev, { dish: clone }]);
       setStale(true);
-      // Navigate to the dashboard page
-      router.push("/pages/dashboard");
+      // Navigate only if submit button clicked not form
+      if(e.type==="click") {
+        router.push("/pages/dashboard");
+      } 
     },
     [dish, router, setStale, setDishes]
   );
