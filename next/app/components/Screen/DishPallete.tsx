@@ -1,7 +1,7 @@
 // DishPallete.tsx
 import React from "react";
 import Heading from "@/components/Heading";
-import ListLink from "@/components/Lists/ListLink";
+import ListLink from "@/components/ListLink";
 
 interface DishPalleteProps {
   items: {

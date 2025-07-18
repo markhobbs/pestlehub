@@ -1,10 +1,11 @@
 "use client"
 
 import React, {useEffect, useState, useContext} from "react";
-import {ProfileContext } from '../../ContextProvider/ProfileProvider';
 import {useRouter} from "next/navigation";
 import {headers} from "@/utils/headers";
 import {PASSWORD_REGEX, EMAIL_REGEX} from "@/utils/shared";
+import {ProfileContext} from '@/ContextProvider/ProfileProvider';
+import {DishContext} from '@/ContextProvider/DishProvider';
 import PasswordInputField from "@/components/Account/PasswordInputField";
 import PasswordInputFieldConfirm from "@/components/Account/PasswordInputFieldConfirm";
 import NameInputField from "@/components/Account/NameInputField";
@@ -23,6 +24,10 @@ interface Profile {
   setProfile: (profile: {username: string; token: string; status: string}) => void;
 }
 
+interface Dish {
+  setStale: any;
+}
+
 interface Errors {
     name: string;
     email: string;
@@ -33,7 +38,8 @@ interface Errors {
 
 function Account({journey, activate}: AccountProps) {
   const router = useRouter();
-  const {setProfile } = useContext(ProfileContext) as unknown as Profile;
+  const {setProfile} = useContext(ProfileContext) as unknown as Profile;
+  const {setStale} = useContext(DishContext) as unknown as Dish;
   const [disabled, setDisabled] = useState<boolean>(true);
   const formStateDefault = {name: "", email: "", token: "", password: "", confirmPassword: ""}
   const errorsDefault = {name: "*Required", email: "*Required", token: "*Required", password: "*Required", confirmPassword: "*Required"}
@@ -168,6 +174,7 @@ function Account({journey, activate}: AccountProps) {
     if (rawResponse.status === 200) {
       const response = await rawResponse.json();
       setProfile({ username: response.uPID, token: response.data, status: "active" });
+      setStale(true);
       router.push("/pages/dashboard");
     } 
   };

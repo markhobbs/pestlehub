@@ -4,6 +4,7 @@
 import React, {useEffect, useState, useContext} from "react";
 import {useRouter, usePathname} from "next/navigation";
 import {ProfileContext} from '@/ContextProvider/ProfileProvider';
+import {DishContext} from '@/ContextProvider/DishProvider';
 import {Inspiration} from "@/components/Snippets";
 
 interface Props {
@@ -17,10 +18,15 @@ interface Profile {
     }
 }
 
+interface Dish {
+    setStale: boolean | any;
+}
+
 const SaveButton:React.FC<Props> = () => {
     const router = useRouter();
     const pathname = usePathname()
     const {profile} = useContext(ProfileContext) as unknown as Profile;
+    const {setStale} = useContext(DishContext) as unknown as Dish;
     const [saved, setSaved] = useState(false)
     const currPID = pathname.split("/").slice(-1)[0];
     const {username, status, token} = profile || {};
@@ -81,6 +87,7 @@ const SaveButton:React.FC<Props> = () => {
             });
             if (rawResponse.status === 200) {
                 setSaved(true);
+                setStale(true);
             }
         } catch (error) {
             console.error('Failed to fetch saved items:', error);
@@ -101,6 +108,7 @@ const SaveButton:React.FC<Props> = () => {
             });
             if (rawResponse.status === 200) {
                 setSaved(false);
+                setStale(true);
             }
         } catch (error) {
             console.error("Error removing:", error);

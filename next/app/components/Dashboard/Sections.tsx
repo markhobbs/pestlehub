@@ -29,6 +29,7 @@ const Sections = ({data}: PropsInterface) => {
   const { setStale } = useContext(DishContext) as unknown as ProfileInterface;
   const apiItemDelete = `${process.env.NEXT_PUBLIC_API_URI}/dish/user/${profile.username}`;
   const {token} = profile || {};
+  const {creations, bookmarks} = data || {};
   
   const handleDeleteDish = (item:{pid:{item:string}}) => {
     if (window.confirm("You are about to remove a Dish! Are you sure?") === true) {
@@ -59,11 +60,11 @@ const Sections = ({data}: PropsInterface) => {
   };
   
   return <>
-    <Heading Tag="h3" title={dictionary.config.bookmarks} />
-      {data['bookmarks'] && data['bookmarks'].length ? <ul 
+   <Heading Tag="h3" title={dictionary.config.bookmarks} />
+      {bookmarks && bookmarks.length ? <ul 
         className="list-disc mb-4 mt-4 pl-6" 
         role="list">
-        {data.bookmarks.map((item, index) => <li key={index}>
+        {bookmarks.map((item, index) => <li key={index}>
           <Link
             className="text-blue-700 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline" 
             href={{pathname: `/pages/dish/${item.pID}` }}>
@@ -71,12 +72,11 @@ const Sections = ({data}: PropsInterface) => {
           </Link>
       </li>)
     }</ul> : <NoBookmarks />}
-
     <Heading Tag="h3" title={dictionary.config.creations} />
-    {data['creations'] && data['creations'].length ? <ul 
+    {creations && creations.length ? <ul 
       className="list-disc mb-4 mt-4 pl-6" 
       role="list">
-      {data.creations.map((item, index) => <li key={index}>
+      {creations.map((item, index) => <li key={index}>
         <Link
           className="text-blue-700 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline" 
           href={{pathname: `/pages/dish/${item.pID}`}}>
