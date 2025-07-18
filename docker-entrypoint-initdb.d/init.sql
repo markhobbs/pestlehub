@@ -1023,8 +1023,6 @@ INSERT INTO `ingredients` (`ingredients_ID`, `pID`, `ingredient`, `amount`, `uni
 (114, 'gguvjquhzxtqyelwd2zhaa', 'Brown sugar', 1.00, 3, NULL),
 (115, 'gguvjquhzxtqyelwd2zhaa', 'Rice Vinegar', 2.00, 3, NULL),
 (116, 'gguvjquhzxtqyelwd2zhaa', 'Lime', 2.00, NULL, NULL),
-(158, 'szxx_1b0qm6omczo1yes9w', 'sadasd', 1.00, 0, 0),
-(159, 'd-wxhfm7s6a-iie4kxw_ka', 'sadasd', 1.00, 0, 0),
 (171, 'biqnqzaxreqil1thqvik8a', 'Lemon', 7.00, 4, 9),
 (172, 'biqnqzaxreqil1thqvik8a', 'Lemon Basil', 3.00, 4, 9),
 (173, 'biqnqzaxreqil1thqvik8a', 'Lemon Thyme', 2.00, 4, 9),

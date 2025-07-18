@@ -55,5 +55,3 @@ npm run test:coverage
 Port the Flask API to Express or NextJS Middleware.
 
 Encrypt API Requests/Responses.
-
-Not Logged in Dishbuilder User, Fix Journey break (Created Dishes) after login. 
