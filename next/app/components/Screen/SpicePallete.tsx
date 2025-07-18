@@ -1,6 +1,6 @@
 // SpicePallete.js
 import React from "react";
-import List from "@/components/Lists/List";
+import List from "@/components/List";
 
 interface SpicePalleteProps {
   items? : any;

@@ -35,7 +35,7 @@ export function NoCurrentMethods() {
 };
 
 export function NoUserAccount() {
-  return <p>{dictionary.snippets.noAccount} <Link className="text-blue-700 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline" href={"/login"}>Login</Link>.</p>
+  return <p><Link className="text-blue-700 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline" href={"/login"}>Login</Link> {dictionary.snippets.noAccount}</p>
 };
 
 export function Inspiration() {
