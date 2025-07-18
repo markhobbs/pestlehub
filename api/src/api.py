@@ -31,7 +31,7 @@ def createDishes():
         
         if data and 'dishes' in data:
             _dishes = data['dishes']
-            if _dishes:
+            if _dishes and len(_dishes) >= 1 and len(_dishes) <= 5:
                 cnx = connect_to_mysql(config, attempts=3)
                 if cnx and cnx.is_connected():
                     with cnx.cursor() as cursor:
@@ -67,7 +67,7 @@ def createDishes():
                                 response.status_code = 200
                                 return response   
                             
-                            if ingredients and len(ingredients) >= 1:
+                            if ingredients and len(ingredients) >= 1 and len(ingredients) <= 25:
                                 for ingredient in ingredients:
                                     bindDataIngredients.append((
                                         ingredient.get('pid', pidGenerated), 
@@ -77,13 +77,13 @@ def createDishes():
                                         ingredient.get('state_ID', -1)))
                             else:
                                 response_data = {
-                                    'message': 'Minimum of 1 Ingredients Required'
+                                    'message': 'Min of 1, Max of 25 Ingredients Required'
                                 }
                                 response = jsonify(response_data)
                                 response.status_code = 200
                                 return response
 
-                            if methods and len(methods) >= 1:
+                            if methods and len(methods) >= 1 and len(ingredients) <= 10:
                                 for method in methods:
                                     bindDataMethods.append((
                                         method.get('pid', pidGenerated),
@@ -92,7 +92,7 @@ def createDishes():
                                         method.get('body', 'No Body Given')))
                             else:
                                 response_data = {
-                                    'message': 'Minimum of 1 Method Required'
+                                    'message': 'Min of 1, Max of 10 Methods Required'
                                 }
                                 response = jsonify(response_data)
                                 response.status_code = 200
@@ -113,7 +113,12 @@ def createDishes():
                         response.status_code = 200
                         return response
             else:
-                return show_405_message()
+                response_data = {
+                    'message': 'Min of 1, Max of 5 Dishes Required'
+                }
+                response = jsonify(response_data)
+                response.status_code = 200
+                return response
         else:
             return show_405_message()
     except Exception as e:
