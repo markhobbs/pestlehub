@@ -48,7 +48,7 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
           <button
             className="cursor-pointer bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
             onClick={(e) => handleAdd(e, query)}>
-            {capitalizeFirst(query)}
+            {capitalizeFirst(query)} +
           </button>
         </li>
         {ingredients
@@ -58,7 +58,7 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
               <button
                 className="cursor-pointer bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
                 onClick={(e) => handleAdd(e, filtered.name)}>
-                {filtered.name}
+                {filtered.name} + 
               </button>
           </li>)
         )}
