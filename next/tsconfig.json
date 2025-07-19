@@ -26,6 +26,6 @@
       "@/components/*": ["components/*"]
     }*/
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/_app.tsx", "app/components/Account/EmailInputField.tsx", "app/components/ListLink.tsx", "app/components/Inspirationtsx", "app/components/Screen/DashboardPallete.js", "app/components/DishBuilder/index.tsx", "app/components/SearchList.tsx", "app/components/Screen/index.js", "app/ContextProvider/ProfileProvider.js", "app/ContextProvider/DishProvider.js", "__tests__/Heading.jest.js", "jest.config.js", "__tests__/StatusBadge.jest.js", "__tests__/Label.jest.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/_app.tsx", "app/components/Account/EmailInputField.tsx", "app/components/Screen/Ingredients.tsx", "app/components/Inspirationtsx", "app/components/Screen/DashboardPallete.js", "app/components/DishBuilder/index.tsx", "app/components/SearchList.tsx", "app/components/Screen/index.js", "app/ContextProvider/ProfileProvider.js", "app/ContextProvider/DishProvider.js", "__tests__/Heading.jest.js", "jest.config.js", "__tests__/StatusBadge.jest.js", "__tests__/Label.jest.js"],
   "exclude": ["node_modules"]
 }
