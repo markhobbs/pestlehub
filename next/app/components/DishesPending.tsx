@@ -24,18 +24,19 @@ interface Ingredient {
 }
 
 interface Method {
-  heading: string;
+  heading: string;  
   body: string;
 }
 
 const DishesPending: React.FC<DishesPendingProps> = ({ dishes }) => {
-  return Array.isArray(dishes) && dishes.length > 0 && <>
+  return Array.isArray(dishes) && dishes.length > 0 && dishes.length <= 5 && <>
   <Heading Tag="h3" title="Your Dishes" />
   <ul className="list-disc mb-4 mt-4 pl-6" role="list">
     {dishes.map((dishes, index) => <li key={index}>
       {dishes.dish.title}
     </li>)}
   </ul>
+  {dishes.length >= 5 && <em>5 Dishes Max</em>}
 </>}
 
 DishesPending.displayName = 'DishesPending';
