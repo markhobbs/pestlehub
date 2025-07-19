@@ -78,6 +78,11 @@
       "title": "Title",
       "units": "Units"
     },
+    "elements": {
+      "states": "states",
+      "units": "units",
+      "search": "search"
+    },
     "placeholders": {
       "method": "Press the pestle against the spices to grind them to a desired consistency.",
       "title": "Step 1 : Prepare the Paste",

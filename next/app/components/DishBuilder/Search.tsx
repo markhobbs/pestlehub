@@ -57,48 +57,58 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
     </>
   };
 
+  const Search = () => <div className="mb-2">
+    <Label 
+      text={dictionary.dbuild.labels.search} 
+      element={dictionary.dbuild.elements.search} />
+    <Input 
+      element={dictionary.dbuild.elements.search}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery((e.target.value).toLowerCase())} 
+      text={dictionary.dbuild.placeholders.search}  />
+  </div>
+
+  const Units = () => <div className="mb-2 md:ml-2">
+    <Label 
+      text={dictionary.dbuild.labels.units} 
+      element={dictionary.dbuild.elements.units} />  
+    <div className="relative">
+      <Select 
+        element={dictionary.dbuild.elements.units}
+        onChange={handleUnitChange}
+        items={units} 
+        value={selectedUnit} />
+    </div>
+  </div>
+
+  const States = () => <div className="mb-2 md:ml-2">
+    <Label 
+      text={dictionary.dbuild.labels.states} 
+      element={dictionary.dbuild.elements.states}  /> 
+    <div className="relative">
+      <Select 
+        element={dictionary.dbuild.elements.states}
+        onChange={handleStateChange}
+        items={states} 
+        value={selectedState} />
+        <SelectListSVG />
+    </div>
+  </div>
+  
+  const Results = () => <div>
+    {query && <Heading Tag="h3" title="Search" />}
+    {ingredients.length > 0 && <SearchResults />}
+  </div>
+
   return <div>
-      <div>
-        <div className="md:flex md:items-center"> 
-          <div className="mb-2">
-            <Label 
-              text="Search" 
-              element={dictionary.dbuild.labels.search} />
-            <Input 
-              element="search" 
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery((e.target.value).toLowerCase())} 
-              text={dictionary.dbuild.placeholders.search}  />
-          </div>
-          <div className="mb-2 md:ml-2">
-            <Label 
-              text="Units" 
-              element={dictionary.dbuild.labels.units} />  
-            <div className="relative">
-              <Select 
-                element="units" 
-                onChange={handleUnitChange}
-                items={units} 
-                value={selectedUnit} />
-            </div>
-          </div>
-          <div className="mb-2 md:ml-2">
-            <Label text="State" element="state" /> 
-            <div className="relative">
-              <Select 
-                element={dictionary.dbuild.labels.states}
-                onChange={handleStateChange}
-                items={states} 
-                value={selectedState} />
-                <SelectListSVG />
-            </div>
-          </div>
-        </div>
+    <div>
+      <div className="md:flex md:items-center"> 
+        <Search />
+        <Units />
+        <States />
       </div>
-      <div>
-        {query && <Heading Tag="h3" title="Search" />}
-        {ingredients.length > 0 && <SearchResults />}
-      </div>
-   </div>};
+    </div>
+    <Results />
+</div>};
 
 Search.displayName = 'Search';
 export default Search;
