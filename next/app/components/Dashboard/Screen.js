@@ -13,7 +13,7 @@ import {NoUserAccount, Inspiration} from "@/components/Snippets";
 const Screen = () => {
   const {profile} = useContext(ProfileContext);
   const {dashboard, dishes, setStale, setDashboard, setDishes, isStale} = useContext(DishContext);
-  const [response, setResponse] = useState([]);
+  // const [response, setResponse] = useState([]);
   const {username, token} = profile || {};
   const rootEndpoint = `${process.env.NEXT_PUBLIC_API_URI}`;
   const getDishesEndpoint = `${rootEndpoint}/dish/user/${username}`;
@@ -23,6 +23,9 @@ const Screen = () => {
     if (username && isStale) {
       const setData = async (dish) => {
         try {
+          // Attach Author to Dish
+          dish.dishes[0].dish.publishedby = username;
+
           fetch(`${saveDishesEndpoint}`, {
             method: "POST", 
             headers: {
@@ -38,7 +41,7 @@ const Screen = () => {
               return response.json();
             })
             .then(() => setStale(true))
-            .then((data) => setResponse((prevResponse) => [...prevResponse, data]))
+            //.then((data) => setResponse((prevResponse) => [...prevResponse, data]))
             .then(() => setDishes([]))
             .catch((error) => {
               console.log(` ${error.message}`);
@@ -86,7 +89,7 @@ const Screen = () => {
 
   const AuthenticatedScreen = () => {
     return <>
-      {response.length > 0 && <p>{response}</p>}
+      {/*response.length > 0 && <p>{JSON.stringify(response)}</p>*/}
       <Sections data={dashboard} />
       <DishesPending dishes={dishes} />
       <LogOutButton /> 
