@@ -7,7 +7,7 @@ import {DishContext} from '@/ContextProvider/DishProvider';
 import dictionary from '@/data/dictionary.json';
 import Button from "@/components/Button";
 import Sections from "@/components/Dashboard/Sections";
-import DishesPending from "@/components/DishesPending";
+import Pending from "@/components/Pending";
 import {NoUserAccount, Inspiration} from "@/components/Snippets";
 
 const Screen = () => {
@@ -91,7 +91,7 @@ const Screen = () => {
     return <>
       {/*response.length > 0 && <p>{JSON.stringify(response)}</p>*/}
       <Sections data={dashboard} />
-      <DishesPending dishes={dishes} />
+      <Pending dishes={dishes} />
       <LogOutButton /> 
       <Inspiration />
     </>
@@ -99,7 +99,7 @@ const Screen = () => {
 
   const NonAuthenticatedScreen = () => {
     return <>
-      <DishesPending dishes={dishes} />
+      <Pending dishes={dishes} />
       <NoUserAccount />
     </>
   }

@@ -2,8 +2,8 @@
 "use client"
 
 import React, {ChangeEventHandler} from "react";
-import CurrentIngredients from "@/components/CurrentIngredients";
-import CurrentMethods from "@/components/CurrentMethods";
+import Ingredients from "@/components/Ingredients";
+import Methods from "@/components/Methods";
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
 import Label from "@/components/Label";
@@ -93,13 +93,13 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
       <Heading 
         Tag="h3" 
         title={dictionary.dbuild.ingredientsTitle} />
-      <CurrentIngredients dish={dish} />
+      <Ingredients dish={dish} />
     </div>
     <div className="mb-2">
       <Heading 
         Tag="h3" 
         title={dictionary.dbuild.methodsTitle} />
-      <CurrentMethods dish={dish} />
+      <Methods dish={dish} />
     </div>
     <Heading 
       Tag="h3" 

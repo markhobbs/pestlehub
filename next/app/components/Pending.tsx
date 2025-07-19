@@ -1,8 +1,8 @@
-// List/ListCreations.js
+// List/Pending.js
 import React from "react";
 import Heading from "@/components/Heading"
 
-interface DishesPendingProps {
+interface PendingProps {
   dishes: {
     dish: Dish[];
   }
@@ -28,16 +28,16 @@ interface Method {
   body: string;
 }
 
-const DishesPending: React.FC<DishesPendingProps> = ({ dishes }) => {
+const Pending: React.FC<PendingProps> = ({ dishes }) => {
   return Array.isArray(dishes) && dishes.length > 0 && dishes.length <= 5 && <>
-  <Heading Tag="h3" title="Your Dishes" />
-  <ul className="list-disc mb-4 mt-4 pl-6" role="list">
-    {dishes.map((dishes, index) => <li key={index}>
-      {dishes.dish.title}
-    </li>)}
-  </ul>
-  {dishes.length >= 5 && <em>5 Dishes Max</em>}
+    <Heading Tag="h3" title="Your Dishes" />
+    <ul className="list-disc mb-4 mt-4 pl-6" role="list">
+      {dishes.map((dishes, index) => <li key={index}>
+        {dishes.dish.title}
+      </li>)}
+    </ul>
+    {dishes.length >= 5 && <em>5 Dishes Max</em>}
 </>}
 
-DishesPending.displayName = 'DishesPending';
-export default DishesPending;
+Pending.displayName = 'Pending';
+export default Pending;
