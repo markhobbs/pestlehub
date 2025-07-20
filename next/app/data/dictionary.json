@@ -70,23 +70,25 @@
   "dbuild": {
     "ingredientsTitle" : "Current Ingredients",
     "labels": {
-      "method": "Method",
+      "body": "Body",
       "states": "States",
       "search": "Search",
       "timeCook": "Cooking time in minutes",
       "timePrep": "Preperation time in minutes",
-      "title": "Title",
+      "heading": "Heading",
       "units": "Units"
     },
     "elements": {
       "states": "states",
       "units": "units",
-      "search": "search"
+      "search": "search",
+      "heading": "heading",
+      "body": "body"
     },
     "placeholders": {
-      "method": "Press the pestle against the spices to grind them to a desired consistency.",
-      "title": "Step 1 : Prepare the Paste",
-      "search": "Red Cabbage"
+      "heading": "Step 1 : Prepare the Paste",
+      "search": "Red Cabbage",
+      "body": "Press the pestle against the spices to grind them to a desired consistency."
     },
     "methodsTitle" : "Current Methods",
     "nav": {

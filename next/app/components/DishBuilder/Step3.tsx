@@ -61,7 +61,7 @@ const SaveDishButton = (props: SaveDishProps) => {
       || ((timePrepError && timePrepError.length > 0) && true) 
       || ((timeCookError && timeCookError.length > 0) && true) }>
     <span>Save</span>
-  </button>
+  </button>   
 };
 
 const StepThree: React.FC<StepThreeProps> = React.memo(({ 

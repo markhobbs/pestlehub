@@ -29,26 +29,36 @@ interface Method {
   body: string;
 }
 interface StepTwoProps {
+  back: () => void;
+  bodyError?: string | undefined;
   dish: Dish;
   handleChange: (methods: Method[]) => void;
+  handleValidation: () => void;
+  headingError?: string | undefined;
   next: () => void;
-  back: () => void;
 }
   
-const StepTwo: React.FC<StepTwoProps> = React.memo(({ dish, handleChange, next, back }) => {
-  const [heading, setTitle] = useState<string>('');
+const StepTwo: React.FC<StepTwoProps> = React.memo(({back, bodyError, dish, handleChange, handleValidation, headingError, next}) => {
+  const [heading, setHeading] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const {methods} = dish || {};
+  const {elements, labels, placeholders} = dictionary.dbuild;
   
   const addMethod = useCallback((heading: string) => {
       if (!heading.trim()) return;
       const updatedMethods: Method[] = [...methods, { heading, body }];
       handleChange(updatedMethods);
-      setTitle('');
-      setBody('');
     },
     [methods, handleChange, body]
   );
+
+  const handleHeading = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHeading(capitalizeFirst(e.target.value));
+  };
+
+  const handleBody = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setBody(capitalizeFirst(e.target.value));
+  };
   
   const deleteMethod = useCallback((heading: string) => {
     const updatedMethods = methods.filter((method) => method.heading.toLowerCase() !== heading.toLowerCase());
@@ -59,43 +69,53 @@ const StepTwo: React.FC<StepTwoProps> = React.memo(({ dish, handleChange, next, 
     <>
       <StepNav back={back} next={next} title={dictionary.dbuild.nav.step2} />
       <div className="md:items-center mb-2">
-          <div className="mb-1">
-            <Label
-              text={dictionary.dbuild.labels.title}
-              element="title" />
-            <Input 
-              element="title" 
-              onChange={(e) => setTitle(capitalizeFirst(e.target.value))} 
-              text={dictionary.dbuild.placeholders.title} />
-          </div>
+        <div className="mb-1">
+          <Label
+            text={labels.heading}
+            element={elements.heading} />
+          <Input 
+            element={elements.heading} 
+            onBlur={handleValidation} 
+            onKeyUp={handleValidation} 
+            onChange={(e) => handleHeading(e)} 
+            text={placeholders.heading} />
+          <p className="text-red-600 dark:text-red-400 text-xs italic">
+            {headingError}
+          </p>
         </div>
-        <div>
-          <div className="mb-1">
-            <Label 
-              text={dictionary.dbuild.labels.method}
-              element="body" />
-            <TextArea 
-              text={dictionary.dbuild.placeholders.method} 
-              element="body"
-              onChange={(e) => setBody(capitalizeFirst(e.target.value))} />
-          </div>
+      </div>
+      <div>
+        <div className="mb-1">
+          <Label 
+            text={labels.body}
+            element={elements.body} />
+          <TextArea 
+            element={elements.body}
+            onBlur={handleValidation}
+            onKeyUp={handleValidation} 
+            onChange={(e) => handleBody(e)}
+            text={placeholders.body} />
+           <p className="text-red-600 dark:text-red-400 text-xs italic">
+            {bodyError}
+          </p>
         </div>
-        <div className="md:flex md:items-center mb-2">
-          <button
-            className="cursor-pointer rounded-md bg-emerald-700 mt-4 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:bg-stone-500"
-            type="button" 
-            onClick={() => addMethod(heading)}
-            disabled={!heading.trim() || !body.trim()}>
-            <span>+ Add Method</span>
-          </button>
+      </div>
+      <div className="md:flex md:items-center mb-6">
+        <button
+          className="cursor-pointer rounded-md bg-emerald-700 mt-4 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:bg-stone-500"
+          type="button" 
+          onClick={() => addMethod(heading)}
+          disabled={!heading.trim() || !body.trim()}>
+          <span>+ Add Method</span>
+        </button>
       </div>
 
       {(methods && methods.length > 0) && <Heading Tag="h3" title={dictionary.dbuild.methodsTitle} />}
       {(methods && methods.length > 0) && <ul className="list-disc mb-4 mt-4 pl-6" role="list">
         {methods.map((method, index) => <li key={index}>
-          <button onClick={() => deleteMethod(method.heading)}>
+          <span onClick={() => deleteMethod(method.heading)}>
             <strong>{method.heading}</strong> : {method.body} 
-          </button>
+          </span>
         </li>)}
       </ul>}
     </>

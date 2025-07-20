@@ -7,6 +7,7 @@ import Heading from "@/components/Heading";
 import { NoBookmarks, NoCreations } from "@/components/Snippets";
 import { ProfileContext } from '@/ContextProvider/ProfileProvider';
 import { DishContext } from  '@/ContextProvider/DishProvider';
+import config from '@/data/config.json';
 import dictionary from '@/data/dictionary.json';
 
 interface ProfileInterface {
@@ -27,9 +28,10 @@ const Sections = ({data}: PropsInterface) => {
   const router = useRouter();
   const { profile } = useContext(ProfileContext) as unknown as ProfileInterface;
   const { setStale } = useContext(DishContext) as unknown as ProfileInterface;
-  const apiItemDelete = `${process.env.NEXT_PUBLIC_API_URI}/dish/user/${profile.username}`;
   const {token} = profile || {};
   const {creations, bookmarks} = data || {};
+  const api = `${process.env.NEXT_PUBLIC_API_URI || config.api}`;
+  const apiItemDelete = `${api}/dish/user/${profile.username}`;
   
   const handleDeleteDish = (item:{pid:{item:string}}) => {
     if (window.confirm("You are about to remove a Dish! Are you sure?") === true) {

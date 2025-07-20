@@ -36,9 +36,7 @@ function IngredientsItem({item}: any) {
               href="/pages/measure">
               {item.unit}
             </a>}
-        </sup> 
-        <strong>{item.ingredient}</strong> 
-        <sub>{item.state !== "None" && item.state}</sub>
+        </sup> <strong>{item.ingredient}</strong> <sub>{item.state !== "None" && item.state}</sub>
       </span>
     </li>
 )}

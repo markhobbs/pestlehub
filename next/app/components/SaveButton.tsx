@@ -6,6 +6,7 @@ import {useRouter, usePathname} from "next/navigation";
 import {ProfileContext} from '@/ContextProvider/ProfileProvider';
 import {DishContext} from '@/ContextProvider/DishProvider';
 import {Inspiration} from "@/components/Snippets";
+import config from '@/data/config.json';
 
 interface Props {
     table: string;
@@ -31,6 +32,7 @@ const SaveButton:React.FC<Props> = () => {
     const currPID = pathname.split("/").slice(-1)[0];
     const {username, status, token} = profile || {};
     const isActive = status === "active";
+    const api = `${process.env.NEXT_PUBLIC_API_URI || config.api}`;
 
     useEffect(() => { 
         const fetchSavedItems = async (
@@ -38,7 +40,7 @@ const SaveButton:React.FC<Props> = () => {
             currPID: string, 
             setSaved: React.Dispatch<React.SetStateAction<boolean>>
         ) => {
-            const url = `${process.env.NEXT_PUBLIC_API_URI}/bookmark/${username}`;
+            const url = `${api}/bookmark/${username}`;
             try {
                 const rawResponse = await fetch(url, { 
                     method: 'GET',
@@ -70,7 +72,7 @@ const SaveButton:React.FC<Props> = () => {
     }, [currPID, token, username, isActive]);
 
     const handleSave = async () => {
-        const url = `${process.env.NEXT_PUBLIC_API_URI}/bookmark`;
+        const url = `${api}/bookmark`;
         try {
             const rawResponse = await fetch(url, {
                 method: 'POST',
@@ -96,7 +98,7 @@ const SaveButton:React.FC<Props> = () => {
     };
 
     const handleRemove = async () => {
-        const url = `${process.env.NEXT_PUBLIC_API_URI}/bookmark/${username}/${currPID}`;
+        const url = `${api}/bookmark/${username}/${currPID}`;
         try {
             const rawResponse = await fetch(url, {
                 method: 'DELETE', 

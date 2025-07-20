@@ -27,11 +27,7 @@ const ListIngredients = ({ dish } : { dish: Dish }) => {
                         Number(unit.index) === unit_ID && Number(unit.index) !== -1)
                         .map((unit, key) => <span key={key}>{unit.code}</span>)}
                 </sup>
-            </span>      
-            <span>
-                {name}
-            </span>
-            <span>
+            </span> <span>{name}</span> <span>
                 <sup>
                     {states.filter((state) => 
                         Number(state.index) === state_ID && Number(state.index) !== -1)
