@@ -36,6 +36,14 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+# Test image,
+RUN \
+  if [ -f yarn.lock ]; then yarn run test; \
+  elif [ -f package-lock.json ]; then npm run test; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run test; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
