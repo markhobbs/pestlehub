@@ -8,7 +8,9 @@ import Label from "@/components/Label";
 import StepNav from "@/components/DishBuilder/StepNav";
 import TextArea from "@/components/TextArea";
 import dictionary from '@/data/dictionary.json';
+import config from '@/data/config.json';
 import {capitalizeFirst} from "@/utils/shared";
+import {MaxMethods} from "@/components/Snippets";
 
 interface Dish {
   title: string;
@@ -24,10 +26,16 @@ interface Ingredient {
   unit_ID?: number;
   state_ID?: number;
 }
+
+interface Methods {
+  methods: Method[];
+}
+
 interface Method {
   heading: string;
   body: string;
 }
+
 interface StepTwoProps {
   back: () => void;
   bodyError?: string | undefined;
@@ -46,8 +54,10 @@ const StepTwo: React.FC<StepTwoProps> = React.memo(({back, bodyError, dish, hand
   
   const addMethod = useCallback((heading: string) => {
       if (!heading.trim()) return;
-      const updatedMethods: Method[] = [...methods, { heading, body }];
-      handleChange(updatedMethods);
+      if (methods.length < config.maxMethod) {
+        const updatedMethods: Method[] = [...methods, { heading, body }];
+        handleChange(updatedMethods);
+      }
     },
     [methods, handleChange, body]
   );
@@ -65,9 +75,26 @@ const StepTwo: React.FC<StepTwoProps> = React.memo(({back, bodyError, dish, hand
     handleChange(updatedMethods);
   }, [methods, handleChange]);
 
+  const CurrentMethods = ({methods}: Methods) => {
+    return (methods && methods.length > 0) && <>
+      <Heading Tag="h3" title={dictionary.dbuild.methodsTitle} />
+      <MaxMethods />
+      <ul className="list-disc mb-4 mt-4 pl-6" role="list">
+        {methods.map((method, index) => <li key={index}>
+          <span onClick={() => deleteMethod(method.heading)}>
+            <strong>{method.heading}</strong> : {method.body} 
+          </span>
+        </li>)}
+      </ul>
+    </>
+  };
+
   return (
     <>
-      <StepNav back={back} next={next} title={dictionary.dbuild.nav.step2} />
+      <StepNav 
+        back={back} 
+        next={next} 
+        title={dictionary.dbuild.nav.step2} />
       <div className="md:items-center mb-2">
         <div className="mb-1">
           <Label
@@ -106,18 +133,11 @@ const StepTwo: React.FC<StepTwoProps> = React.memo(({back, bodyError, dish, hand
           type="button" 
           onClick={() => addMethod(heading)}
           disabled={!heading.trim() || !body.trim()}>
-          <span>+ Add Method</span>
+          <span>ADD</span>
         </button>
       </div>
-
-      {(methods && methods.length > 0) && <Heading Tag="h3" title={dictionary.dbuild.methodsTitle} />}
-      {(methods && methods.length > 0) && <ul className="list-disc mb-4 mt-4 pl-6" role="list">
-        {methods.map((method, index) => <li key={index}>
-          <span onClick={() => deleteMethod(method.heading)}>
-            <strong>{method.heading}</strong> : {method.body} 
-          </span>
-        </li>)}
-      </ul>}
+      
+      <CurrentMethods methods={methods} />
     </>
   );
 });

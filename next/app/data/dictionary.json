@@ -68,11 +68,11 @@
     "removeSection": "Remove Section"
   },
   "dbuild": {
-    "ingredientsTitle" : "Current Ingredients",
+    "ingredientsTitle" : "Selected Ingredients",
     "labels": {
       "body": "Body",
       "states": "States",
-      "search": "Search",
+      "search": "Search Ingredients",
       "timeCook": "Cooking time in minutes",
       "timePrep": "Preperation time in minutes",
       "heading": "Heading",
@@ -90,7 +90,7 @@
       "search": "Red Cabbage",
       "body": "Press the pestle against the spices to grind them to a desired consistency."
     },
-    "methodsTitle" : "Current Methods",
+    "methodsTitle" : "Selected Methods",
     "nav": {
       "step1": "Step 1 of 3 : Ingredients",
       "step2": "Step 2 of 3 : Methods",

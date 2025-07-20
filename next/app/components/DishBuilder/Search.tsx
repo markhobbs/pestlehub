@@ -1,5 +1,4 @@
 // Search.tsx 
-
 import React, {useState} from 'react';
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
@@ -12,7 +11,6 @@ import units from '@/data/units.json'
 import {capitalizeFirst} from "@/utils/shared";
 import {SelectListSVG} from "../../../public/SVGs";
 
-
 interface SearchProps {
   onAddIngredient: (
     ingredientName: string,
@@ -20,6 +18,7 @@ interface SearchProps {
     unit_ID: number,
     state_ID: number
   ) => void;
+  ingredients: object;
 }
 
 const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
@@ -48,7 +47,7 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
           <button
             className="cursor-pointer bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
             onClick={(e) => handleAdd(e, query)}>
-            {capitalizeFirst(query)} +
+            ADD {capitalizeFirst(query)}
           </button>
         </li>
         {ingredients
@@ -58,7 +57,7 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
               <button
                 className="cursor-pointer bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
                 onClick={(e) => handleAdd(e, filtered.name)}>
-                {filtered.name} + 
+                ADD {filtered.name} 
               </button>
           </li>)
         )}
@@ -94,7 +93,7 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
   </div>
   
   const Results = () => <div>
-    {query && <Heading Tag="h3" title="Search" />}
+    {query && <Heading Tag="h3" title={`Results for '${query}'`} />}
     {ingredients.length > 0 && <SearchResults />}
   </div>
 

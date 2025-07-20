@@ -1,6 +1,7 @@
 // Snippets.tsx;
 import Link from "next/link";
 import dictionary from '@/data/dictionary.json';
+import config from '@/data/config.json';
 const snippets = dictionary.snippets;
 
 export function ForgottenPassword() {
@@ -53,5 +54,10 @@ export function Inspiration() {
   </span>
 };
 
+export function MaxMethods() {
+  return <p>Limit of <strong>{config.maxMethod}</strong> Methods for each dish.</p>
+};
 
-
+export function MaxIngredients() {
+  return <p className="mb-4">Limit of <strong>{config.maxIngredient}</strong> Ingredients for each dish.</p>
+};

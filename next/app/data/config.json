@@ -1,6 +1,6 @@
 { 
   "api": "http://localhost:8081",
-  "maxPendingDishes": 5,
-  "maxIngredientsPerDish": 25,
-  "maxMethodsPerDish": 10
+  "maxDish": 5,
+  "maxIngredient": 30,
+  "maxMethod": 10
 }

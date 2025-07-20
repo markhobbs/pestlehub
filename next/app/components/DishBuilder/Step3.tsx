@@ -60,7 +60,7 @@ const SaveDishButton = (props: SaveDishProps) => {
       || dish.methods.length === 0 
       || ((timePrepError && timePrepError.length > 0) && true) 
       || ((timeCookError && timeCookError.length > 0) && true) }>
-    <span>Save</span>
+    <span>SAVE</span>
   </button>   
 };
 
