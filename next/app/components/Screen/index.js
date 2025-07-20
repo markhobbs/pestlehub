@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import SaveButton from "@/components/SaveButton";
 import MethodSection from "@/components/Screen/MethodSection";
 import ContentSection from "@/components/Screen/ContentSection";
+import config from '@/data/config.json';
 import {headers} from "@/utils/headers";
 
 const Screen = (pid) => {

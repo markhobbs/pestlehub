@@ -1,6 +1,7 @@
 // List/Pending.js
 import React from "react";
 import Heading from "@/components/Heading"
+import config from '@/data/config.json';
 
 interface PendingProps {
   dishes: {
@@ -29,7 +30,7 @@ interface Method {
 }
 
 const Pending: React.FC<PendingProps> = ({ dishes }) => {
-  return Array.isArray(dishes) && dishes.length > 0 && dishes.length <= 5 && <>
+  return Array.isArray(dishes) && dishes.length > 0 && dishes.length <= config.maxPendingDishes && <>
     <Heading Tag="h3" title="Your Dishes" />
     <ul className="list-disc mb-4 mt-4 pl-6" role="list">
       {dishes.map((dishes, index) => <li key={index}>
