@@ -91,10 +91,6 @@ const StepTwo: React.FC<StepTwoProps> = React.memo(({back, bodyError, dish, hand
 
   return (
     <>
-      <StepNav 
-        back={back} 
-        next={next} 
-        title={dictionary.dbuild.nav.step2} />
       <div className="md:items-center mb-2">
         <div className="mb-1">
           <Label
@@ -136,8 +132,11 @@ const StepTwo: React.FC<StepTwoProps> = React.memo(({back, bodyError, dish, hand
           <span>ADD</span>
         </button>
       </div>
-      
       <CurrentMethods methods={methods} />
+      <StepNav 
+        back={back} 
+        next={next} 
+        title={dictionary.dbuild.nav.step2} />
     </>
   );
 });

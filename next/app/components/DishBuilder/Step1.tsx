@@ -114,13 +114,13 @@ const StepOne: React.FC<StepOneProps> = React.memo(({ dish, handleChange, next }
     };
     
     return <>
-        <StepNav 
-            next={next} 
-            title={dictionary.dbuild.nav.step1} />
         <Search 
             ingredients={ingredients} 
             onAddIngredient={addIngredient} />
         <SelectedIngredients ingredients={ingredients} />
+        <StepNav 
+            next={next} 
+            title={dictionary.dbuild.nav.step1} />
     </>});
 
 StepOne.displayName = 'StepOne';

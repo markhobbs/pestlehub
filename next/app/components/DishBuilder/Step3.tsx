@@ -74,7 +74,6 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
   timeCookError,
   timePrepError
   }) => <>
-    <StepNav back={back} title={dictionary.dbuild.nav.step3} />
     <div className="mb-2">
         <Label 
           text="Title" 
@@ -143,6 +142,9 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
       dish={dish}
       timePrepError={timePrepError}
       timeCookError={timeCookError} />
+    <StepNav 
+      back={back} 
+      title={dictionary.dbuild.nav.step3} />
 </>);
 
 StepThree.displayName = 'StepThree';
