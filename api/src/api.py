@@ -141,7 +141,7 @@ def dishesUserGet(username):
             with cnx.cursor() as cursor:
                 cursor.execute("SELECT dish.pID, dish.title FROM dish WHERE dish.username = %s ORDER BY dish.title ASC", (username,))
                 creations = cursor.fetchall()
-                cursor.execute("SELECT saved.saved_IDX, saved.type, dish.title FROM `saved` LEFT JOIN `dish` ON dish.pID = saved.saved_IDX WHERE saved.username = %s ORDER BY dish.title ASC", (username,))
+                cursor.execute("SELECT bookmarks.saved_IDX, bookmarks.type, dish.title FROM `bookmarks` LEFT JOIN `dish` ON dish.pID = bookmarks.saved_IDX WHERE bookmarks.username = %s ORDER BY dish.title ASC", (username,))
                 bookmarks = cursor.fetchall()
                 response_data = {
                     "user" : {
@@ -182,7 +182,7 @@ def dishesDelete(username, pID):
                 cnx.commit()
                 cursor.execute("DELETE FROM section WHERE pID = %s", (pID,))
                 cnx.commit()
-                cursor.execute("DELETE FROM saved WHERE saved_IDX = %s AND username = %s", (pID, username,))
+                cursor.execute("DELETE FROM bookmarks WHERE saved_IDX = %s AND username = %s", (pID, username,))
                 cnx.commit()
                 cursor.execute("DELETE FROM dish WHERE pID = %s AND username = %s AND protected = %s", (pID, username, False,))
                 cnx.commit()
@@ -275,7 +275,7 @@ def bookmarksCreate():
         cnx = connect_to_mysql(config, attempts=3)
         if cnx and cnx.is_connected():
             with cnx.cursor() as cursor:
-                sqlQuery = "INSERT INTO saved (saved_IDX, username, type) VALUES(%s, %s, %s)"
+                sqlQuery = "INSERT INTO bookmarks (saved_IDX, username, type) VALUES(%s, %s, %s)"
                 bindData = (_saved_IDX, sanitized_username, _type)
                 cursor.execute(sqlQuery, bindData)
                 cnx.commit()
@@ -283,8 +283,8 @@ def bookmarksCreate():
                 response.status_code = 200
                 return response
     except Exception as e:
-        logging.error(f"Error adding saved dish: {e}")
-        return jsonify({"error": "Failed to add saved dish"}), 500
+        logging.error(f"Error adding bookmarks: {e}")
+        return jsonify({"error": "Failed to add bookmarks dish"}), 500
     finally:
         if 'cursor' in locals() and cursor:
             cursor.close()
@@ -302,10 +302,10 @@ def bookmarksGet(username):
         if cnx and cnx.is_connected():
             with cnx.cursor() as cursor:
                 cursor.execute(
-                    "SELECT saved.saved_IDX, saved.username, saved.type, dish.title "
-                    "FROM `saved` "
-                    "LEFT JOIN `dish` ON dish.pID = saved.saved_IDX "
-                    "WHERE saved.username = %s "
+                    "SELECT bookmarks.saved_IDX, bookmarks.username, bookmarks.type, dish.title "
+                    "FROM `bookmarks` "
+                    "LEFT JOIN `dish` ON dish.pID = bookmarks.saved_IDX "
+                    "WHERE bookmarks.username = %s "
                     "ORDER BY dish.title ASC", (username,)
                 )
                 rows = cursor.fetchall()
@@ -322,8 +322,8 @@ def bookmarksGet(username):
                 response.status_code = 200
                 return response
     except Exception as e:
-        logging.error(f"Error retrieving saved dishes for user {username}: {e}")
-        return jsonify({"error": "Failed to retrieve saved dishes"}), 500
+        logging.error(f"Error retrieving bookmarks for user {username}: {e}")
+        return jsonify({"error": "Failed to retrieve bookmarks"}), 500
     finally:
         if 'cursor' in locals() and cursor:
             cursor.close()
@@ -339,14 +339,14 @@ def bookmarksDelete(username, saved_IDX):
         cnx = connect_to_mysql(config, attempts=3)
         if cnx and cnx.is_connected():
             with cnx.cursor() as cursor:
-                cursor.execute("DELETE FROM saved WHERE username = %s AND saved_IDX = %s", (username, saved_IDX))
+                cursor.execute("DELETE FROM bookmarks WHERE username = %s AND saved_IDX = %s", (username, saved_IDX))
                 cnx.commit()
                 response = jsonify({"Response": "Bookmark Deleted"})
                 response.status_code = 200
                 return response
     except Exception as e:
-        logging.error(f"Error deleting saved dish {saved_IDX} for user {username}: {e}")
-        return jsonify({"error": "Failed to delete saved dish"}), 500
+        logging.error(f"Error deleting bookmark {saved_IDX} for user {username}: {e}")
+        return jsonify({"error": "Failed to delete bookmark"}), 500
     finally:
         if 'cursor' in locals() and cursor:
             cursor.close()

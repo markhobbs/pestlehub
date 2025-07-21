@@ -12,6 +12,13 @@ Rename example .env.example > .env
 
 Update to your requirements.  Or store them in Git enviorment variables 
 
+# DOCKER
+```bash
+cd ..
+
+docker-compose up -d --build
+```
+
 # NEXT
 ```bash
 cd next
@@ -19,14 +26,15 @@ cd next
 npm install
 
 npm run build
+
 ```
-
-# DOCKER
+# TESTING
 ```bash
+npm run test
 
-cd ..
+npm run test:watch
 
-docker-compose up -d --build
+npm run test:coverage
 ```
 
 # SITE
@@ -37,17 +45,6 @@ Login: http://localhost:8082/login
 username: demo@pestlehub.com
 
 password: pA55wORD$
-
-
-# TESTING
-```bash
-
-npm run test
-
-npm run test:watch
-
-npm run test:coverage
-```
 
 # POSSIBLE IMPROVEMENTS
 Port the Flask API to Express or NextJS Middleware.

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Jul 20, 2025 at 10:32 PM
+-- Generation Time: Jul 21, 2025 at 07:13 PM
 -- Server version: 5.7.44
 -- PHP Version: 8.2.27
 
@@ -20,6 +20,22 @@ SET time_zone = "+00:00";
 --
 -- Database: `pestle_DB`
 --
+CREATE DATABASE IF NOT EXISTS `pestle_DB` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `pestle_DB`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bookmarks`
+--
+
+CREATE TABLE `bookmarks` (
+  `bookmarks_ID` int(5) NOT NULL,
+  `saved_IDX` varchar(30) NOT NULL,
+  `username` varchar(40) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -123,10 +139,7 @@ INSERT INTO `dish` (`dish_ID`, `pID`, `category`, `title`, `type_ID`, `time_prep
 (557, 'fG5h73kL7mNpbV9cX0zA1sD', 'spice', 'Turmeric', 1, NULL, NULL, 1, '', '2024-07-21 07:27:56', '2024-07-21 07:27:56', 1),
 (558, 'fG5hJ6kL7mN8b74cX0zA1sD', 'spice', 'Water Hyssop', 2, NULL, NULL, 1, '', '2024-07-21 07:27:56', '2024-07-21 07:27:56', 1),
 (559, 'fG5h75kL7mN8bV9cX0zA1sD', 'spice', 'Zaatar Seasoning Blend', 3, NULL, NULL, 1, '', '2024-07-21 07:27:56', '2024-07-21 07:27:56', 1),
-(560, '83d6edaTsKmrfyge97os6g', 'spice', 'Ras El Hanout', NULL, NULL, NULL, 1, '', '2024-12-01 15:26:31', '2024-12-01 15:26:31', 1),
-(738, '_wpo6g9ore-g3izygjibzq', 'dish', 'A34', NULL, 0, 0, 0, 'fred', '2025-07-19 01:26:43', '2025-07-19 01:26:43', 0),
-(739, 'tq6lhfmerbw2_3-dzamrra', 'dish', 'A34', NULL, 0, 0, 0, 'fred', '2025-07-19 01:27:13', '2025-07-19 01:27:13', 0);
-
+(560, '83d6edaTsKmrfyge97os6g', 'spice', 'Ras El Hanout', NULL, NULL, NULL, 1, '', '2024-12-01 15:26:31', '2024-12-01 15:26:31', 1);
 -- --------------------------------------------------------
 
 --
@@ -1034,7 +1047,9 @@ INSERT INTO `ingredients` (`ingredients_ID`, `pID`, `ingredient`, `amount`, `uni
 (177, 'joacqujgsfwlflnsjumucg', 'Lemon Thyme', 2.00, 4, 9, '2025-07-20 22:25:43', '2025-07-20 22:26:43'),
 (178, 'joacqujgsfwlflnsjumucg', 'Lemongrass', 4.00, 4, 9, '2025-07-20 22:25:43', '2025-07-20 22:26:43'),
 (400, '_wpo6g9ore-g3izygjibzq', 'Abiu', 1.00, 0, 0, '2025-07-20 22:25:43', '2025-07-20 22:26:43'),
-(401, 'tq6lhfmerbw2_3-dzamrra', 'Abiu', 1.00, 0, 0, '2025-07-20 22:25:43', '2025-07-20 22:26:43');
+(401, 'tq6lhfmerbw2_3-dzamrra', 'Abiu', 1.00, 0, 0, '2025-07-20 22:25:43', '2025-07-20 22:26:43'),
+(402, 'zstxw2rysfc0cd7yom20xw', 'Onion Red', 1.00, 0, 0, '2025-07-21 19:12:20', '2025-07-21 19:12:20'),
+(403, 'zstxw2rysfc0cd7yom20xw', 'Red Cabbage', 1.00, 0, 0, '2025-07-21 19:12:20', '2025-07-21 19:12:20');
 
 -- --------------------------------------------------------
 
@@ -1203,20 +1218,6 @@ INSERT INTO `origins` (`origins_ID`, `spice_ID`, `origin_ID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `saved`
---
-
-CREATE TABLE `saved` (
-  `saved_ID` int(5) NOT NULL,
-  `saved_IDX` varchar(30) NOT NULL,
-  `username` varchar(40) NOT NULL,
-  `type` varchar(20) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `section`
 --
 
@@ -1317,10 +1318,7 @@ INSERT INTO `section` (`section_ID`, `pID`, `category`, `heading`, `body`, `orde
 (356, 'gguvjquhzxtqyelwd2zhaa', 'dish', 'Step 5', 'Mince 1 garlic clove and place in a small bowl. Juice 1 to 2 medium limes into the bowl until you have about 2 1/2 tablespoons. Add 1/3 cup rice vinegar, 2 tablespoons fish sauce, and 2 tablespoons granulated sugar, and whisk to combine.', NULL, 0, '2024-11-24 04:53:20', '2024-11-24 04:53:20'),
 (357, 'gguvjquhzxtqyelwd2zhaa', 'dish', 'Step 6 ', 'Shred the chicken into bite-sized pieces. Add the chicken and onions to the vegetables and toss with your hands to combine. Drizzle with the dressing and toss to combine. Let sit for 5 to 10 minutes for the flavors to meld. Taste and season with more lime juice as needed. Sprinkle each serving with 1 to 2 tablespoons fried shallots and serve with prawn chips if desired.', NULL, 0, '2024-11-24 04:53:20', '2024-11-24 04:53:20'),
 (360, '83deedatskmrfyge97os5g', 'dish', 'Step 1: Herb Sauce', '1 cup fresh herbs, 2 green onions, 2 garlic cloves (2 tsp), grated or minced (or 2 frozen cubes), lemon zest from 1 lemon (plus optional 1-2 tablespoon lemon juice), 6 tablespoon olive oil you can use extra-virgin olive oil if you prefer (it has a stronger taste), 1/2 teaspoon kosher salt, 1/4 teaspoon black pepper, 1/2 teaspoon red pepper flakes or less (optional) *US Measures – Metric Instructions.', NULL, 0, '2024-11-24 06:13:12', '2024-11-24 06:13:12'),
-(361, '83deedatskmrfyge97os5g', 'dish', 'Method', 'You can grill or roast the chicken. °To grill: Clean and oil grill with cooking spray. Heat gas grill to medium high 375-425F(190-218C). °To roast: Heat oven to 400.', NULL, 0, '2024-11-24 06:13:12', '2024-11-24 06:13:12'),
-(541, '_wpo6g9ore-g3izygjibzq', 'dish', 'A', 'A', NULL, 0, '2025-07-19 01:26:43', '2025-07-19 01:26:43'),
-(542, 'tq6lhfmerbw2_3-dzamrra', 'dish', 'A', 'A', NULL, 0, '2025-07-19 01:27:13', '2025-07-19 01:27:13');
-
+(361, '83deedatskmrfyge97os5g', 'dish', 'Method', 'You can grill or roast the chicken. °To grill: Clean and oil grill with cooking spray. Heat gas grill to medium high 375-425F(190-218C). °To roast: Heat oven to 400.', NULL, 0, '2024-11-24 06:13:12', '2024-11-24 06:13:12');
 -- --------------------------------------------------------
 
 --
@@ -1519,6 +1517,12 @@ INSERT INTO `user` (`user_ID`, `username`, `password`, `email`, `name`, `phone`,
 --
 
 --
+-- Indexes for table `bookmarks`
+--
+ALTER TABLE `bookmarks`
+  ADD PRIMARY KEY (`bookmarks_ID`) USING BTREE;
+
+--
 -- Indexes for table `dish`
 --
 ALTER TABLE `dish`
@@ -1574,12 +1578,6 @@ ALTER TABLE `origins`
   ADD PRIMARY KEY (`origins_ID`);
 
 --
--- Indexes for table `saved`
---
-ALTER TABLE `saved`
-  ADD PRIMARY KEY (`saved_ID`) USING BTREE;
-
---
 -- Indexes for table `section`
 --
 ALTER TABLE `section`
@@ -1621,10 +1619,16 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `bookmarks`
+--
+ALTER TABLE `bookmarks`
+  MODIFY `bookmarks_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
 -- AUTO_INCREMENT for table `dish`
 --
 ALTER TABLE `dish`
-  MODIFY `dish_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=795;
+  MODIFY `dish_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=741;
 
 --
 -- AUTO_INCREMENT for table `ingredient`
@@ -1636,19 +1640,13 @@ ALTER TABLE `ingredient`
 -- AUTO_INCREMENT for table `ingredients`
 --
 ALTER TABLE `ingredients`
-  MODIFY `ingredients_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=514;
-
---
--- AUTO_INCREMENT for table `saved`
---
-ALTER TABLE `saved`
-  MODIFY `saved_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `ingredients_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=404;
 
 --
 -- AUTO_INCREMENT for table `section`
 --
 ALTER TABLE `section`
-  MODIFY `section_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=605;
+  MODIFY `section_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=544;
 
 --
 -- AUTO_INCREMENT for table `spices`
