@@ -8,16 +8,19 @@ export const DishProvider = ({children}) => {
     const [dashboard, setDashboard] = useState();
     const [inputs, setInputs] = useState();
     const [isStale, setStale] = useState(false);
+    const [offset, setOffset] = useState(0);
     
     return <DishContext.Provider value={{ 
             dashboard,
             dishes,
+            offset,
             inputs,
             isStale,
             setDashboard,
             setDishes,
             setInputs,
-            setStale
+            setOffset,
+            setStale   
         }}>
         {children}
     </DishContext.Provider>

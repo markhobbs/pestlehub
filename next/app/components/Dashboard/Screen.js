@@ -1,6 +1,6 @@
 // DashboardSections.tsx
 "use client"
-import {useEffect,useContext} from "react";
+import {useContext,useEffect} from "react";
 import {ProfileContext} from '@/ContextProvider/ProfileProvider';
 import {DishContext} from '@/ContextProvider/DishProvider';
 import dictionary from '@/data/dictionary.json';
@@ -12,10 +12,10 @@ import config from '@/data/config.json';
 
 const Screen = () => {
   const {profile} = useContext(ProfileContext);
-  const {dashboard, dishes, setStale, setDashboard, setDishes, isStale} = useContext(DishContext);
+  const {dashboard,dishes,isStale,offset,setDashboard,setDishes,setStale} = useContext(DishContext);
   const {username, token} = profile || {};
   const api = `${process.env.NEXT_PUBLIC_API_URI || config.api}`;
-  const getDishesEndpoint = `${api}/dishes/${username}`;
+  const getDishesEndpoint = `${api}/dishes/${username}/${offset}`;
   const saveDishesEndpoint = `${api}/dishes`;
   // const [response, setResponse] = useState([]);
 
