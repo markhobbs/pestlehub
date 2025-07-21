@@ -51,7 +51,7 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
           </button>
         </li>
         {ingredients
-          .filter(ingredient => ingredient.name.toLowerCase().match(query))
+          .filter(ingredient => capitalizeFirst(ingredient.name).match(query))
           .map((filtered, index) => index < 5 && ( // <= only 5 items
             <li className="inline-flex" key={filtered.ingredient_ID}>
               <button
@@ -106,7 +106,8 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
             element={dictionary.dbuild.elements.search} />
           <Input 
             element={dictionary.dbuild.elements.search}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery((e.target.value).toLowerCase())} 
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
+              setQuery(capitalizeFirst((e.target.value)))} 
             text={dictionary.dbuild.placeholders.search}  />
         </div>
         <Units />
