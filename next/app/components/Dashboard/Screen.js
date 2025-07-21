@@ -15,7 +15,7 @@ const Screen = () => {
   const {dashboard, dishes, setStale, setDashboard, setDishes, isStale} = useContext(DishContext);
   const {username, token} = profile || {};
   const api = `${process.env.NEXT_PUBLIC_API_URI || config.api}`;
-  const getDishesEndpoint = `${api}/dish/user/${username}`;
+  const getDishesEndpoint = `${api}/dishes/${username}`;
   const saveDishesEndpoint = `${api}/dishes`;
   // const [response, setResponse] = useState([]);
 

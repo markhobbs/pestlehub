@@ -31,7 +31,7 @@ const Sections = ({data}: PropsInterface) => {
   const {token} = profile || {};
   const {creations, bookmarks} = data || {};
   const api = `${process.env.NEXT_PUBLIC_API_URI || config.api}`;
-  const apiItemDelete = `${api}/dish/user/${profile.username}`;
+  const apiItemDelete = `${api}/dishes/${profile.username}`;
   
   const handleDeleteDish = (item:{pid:{item:string}}) => {
     if (window.confirm("You are about to remove a Dish! Are you sure?") === true) {

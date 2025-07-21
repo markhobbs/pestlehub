@@ -16,14 +16,14 @@ import base64
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache', 'CACHE_DEFAULT_TIMEOUT': 300})
-CORS(app, resources={r"/*": {"origins": "http://localhost:8082"}})
+CORS(app, resources={r"/*": {"origins": ["http://localhost:8082"]}})
 auth = HTTPTokenAuth(scheme='Bearer')
 allowed_tags = ['p', 'b', 'i', 'em', 'sub']
 
 ## DISHES ##
 @app.route('/dishes', methods=['POST'])
 @auth.login_required
-def createDishes():
+def dishesCreate():
     cursor = None
     cnx = None
     try:
@@ -130,9 +130,80 @@ def createDishes():
         if cnx:
             cnx.close()
 
-@app.route('/dish/<pID>', methods=['GET'])
+@app.route('/dishes/<username>', methods=['GET'])
+@auth.login_required
+def dishesUserGet(username):
+    cursor = None
+    cnx = None
+    try:
+        cnx = connect_to_mysql(config, attempts=3)
+        if cnx and cnx.is_connected():
+            with cnx.cursor() as cursor:
+                cursor.execute("SELECT dish.pID, dish.title FROM dish WHERE dish.username = %s ORDER BY dish.title ASC", (username,))
+                creations = cursor.fetchall()
+                cursor.execute("SELECT saved.saved_IDX, saved.type, dish.title FROM `saved` LEFT JOIN `dish` ON dish.pID = saved.saved_IDX WHERE saved.username = %s ORDER BY dish.title ASC", (username,))
+                bookmarks = cursor.fetchall()
+                response_data = {
+                    "user" : {
+                        "creations": [{
+                            "pID": str(creation[0]),
+                            "title": str(creation[1]),
+                            "type": "dish",
+                        } for creation in creations if creation[0]],
+                        "bookmarks": [{
+                            "pID": str(bookmark[0]),
+                            "type": str(bookmark[1]),
+                            "title": str(bookmark[2]) if str(bookmark[1]) == "dish" else str(bookmark[2])
+                        } for bookmark in bookmarks if bookmark[0]],
+                    } 
+                }
+                response = jsonify(response_data)
+                response.status_code = 200
+                return response
+    except Exception as e:
+        print(f"Database error: {e}")
+        return []
+    finally:
+        if 'cursor' in locals() and cursor:
+            cursor.close()
+        if 'cnx' in locals() and cnx:
+            cnx.close()
+
+@app.route('/dishes/<username>/<pID>', methods=['DELETE'])
+@auth.login_required
+def dishesDelete(username, pID):
+    cursor = None
+    cnx = None
+    try:
+        cnx = connect_to_mysql(config, attempts=3)
+        if cnx and cnx.is_connected():
+            with cnx.cursor() as cursor:
+                cursor.execute("DELETE FROM ingredients WHERE pID = %s", (pID,))
+                cnx.commit()
+                cursor.execute("DELETE FROM section WHERE pID = %s", (pID,))
+                cnx.commit()
+                cursor.execute("DELETE FROM saved WHERE saved_IDX = %s AND username = %s", (pID, username,))
+                cnx.commit()
+                cursor.execute("DELETE FROM dish WHERE pID = %s AND username = %s AND protected = %s", (pID, username, False,))
+                cnx.commit()
+                response = jsonify({"Response": "Dish Deleted Successfully"})
+                #response = jsonify(f'Dish {pID} Deleted Successfully!')
+                response.status_code = 200
+                return response
+    except Exception as e:
+        #logging.error(f"Error deleting dish {pID} for user {username}: {e}")
+        response = jsonify(f"Failed to delete dish {pID}")
+        response.status_code = 500
+        return response
+    finally:
+        if 'cursor' in locals() and cursor:
+            cursor.close()
+        if 'cnx' in locals() and cnx:
+            cnx.close()
+
+@app.route('/dishes/dish/<pID>', methods=['GET'])
 @cache.cached(timeout=86400)
-def getDish(pID):
+def dishGet(pID):
     cursor = None
     cnx = None
     try:
@@ -186,79 +257,10 @@ def getDish(pID):
         if 'cnx' in locals() and cnx:
             cnx.close()
 
-@app.route('/dish/user/<username>', methods=['GET'])
-@auth.login_required
-def getDishesUser(username):
-    cursor = None
-    cnx = None
-    try:
-        cnx = connect_to_mysql(config, attempts=3)
-        if cnx and cnx.is_connected():
-            with cnx.cursor() as cursor:
-                cursor.execute("SELECT dish.pID, dish.title FROM dish WHERE dish.username = %s ORDER BY dish.title ASC", (username,))
-                creations = cursor.fetchall()
-                cursor.execute("SELECT saved.saved_IDX, saved.type, dish.title FROM `saved` LEFT JOIN `dish` ON dish.pID = saved.saved_IDX WHERE saved.username = %s ORDER BY dish.title ASC", (username,))
-                bookmarks = cursor.fetchall()
-                response_data = {
-                    "user" : {
-                        "creations": [{
-                            "pID": str(creation[0]),
-                            "title": str(creation[1]),
-                            "type": "dish",
-                        } for creation in creations if creation[0]],
-                        "bookmarks": [{
-                            "pID": str(bookmark[0]),
-                            "type": str(bookmark[1]),
-                            "title": str(bookmark[2]) if str(bookmark[1]) == "dish" else str(bookmark[2])
-                        } for bookmark in bookmarks if bookmark[0]],
-                    } 
-                }
-                response = jsonify(response_data)
-                response.status_code = 200
-                return response
-    except Exception as e:
-        print(f"Database error: {e}")
-        return []
-    finally:
-        if 'cursor' in locals() and cursor:
-            cursor.close()
-        if 'cnx' in locals() and cnx:
-            cnx.close()
-
-@app.route('/dish/user/<username>/<pID>', methods=['DELETE'])
-@auth.login_required
-def deleteDish(username, pID):
-    cursor = None
-    cnx = None
-    try:
-        cnx = connect_to_mysql(config, attempts=3)
-        if cnx and cnx.is_connected():
-            with cnx.cursor() as cursor:
-                cursor.execute("DELETE FROM ingredients WHERE pID = %s", (pID,))
-                cnx.commit()
-                cursor.execute("DELETE FROM section WHERE pID = %s", (pID,))
-                cnx.commit()
-                cursor.execute("DELETE FROM saved WHERE saved_IDX = %s AND username = %s", (pID, username,))
-                cnx.commit()
-                cursor.execute("DELETE FROM dish WHERE pID = %s AND username = %s AND protected = %s", (pID, username, False,))
-                cnx.commit()
-                response = jsonify(f'Dish {pID} Deleted Successfully!')
-                response.status_code = 200
-                return response
-    except Exception as e:
-        #logging.error(f"Error deleting dish {pID} for user {username}: {e}")
-        response = jsonify(f"Failed to delete dish {pID}")
-        response.status_code = 500
-        return response
-    finally:
-        if 'cursor' in locals() and cursor:
-            cursor.close()
-        if 'cnx' in locals() and cnx:
-            cnx.close()
 ## BOOKMARKS ## 
-@app.route('/bookmark', methods=['POST'])
+@app.route('/bookmarks', methods=['POST'])
 @auth.login_required
-def createBookmark():
+def bookmarksCreate():
     cursor = None
     cnx = None
     try:
@@ -277,7 +279,7 @@ def createBookmark():
                 bindData = (_saved_IDX, sanitized_username, _type)
                 cursor.execute(sqlQuery, bindData)
                 cnx.commit()
-                response = jsonify('Saved added successfully!')
+                response = jsonify({"Response": "Successfully Bookmarked"})
                 response.status_code = 200
                 return response
     except Exception as e:
@@ -289,10 +291,10 @@ def createBookmark():
         if 'cnx' in locals() and cnx:
             cnx.close()
 
-@app.route('/bookmark/<username>', methods=['GET'])
+@app.route('/bookmarks/<username>', methods=['GET'])
 @auth.login_required
 @cache.cached(timeout=1)
-def getBookmarks(username):
+def bookmarksGet(username):
     cursor = None
     cnx = None
     try:
@@ -328,9 +330,9 @@ def getBookmarks(username):
         if 'cnx' in locals() and cnx:
             cnx.close()
 
-@app.route('/bookmark/<username>/<saved_IDX>', methods=['DELETE'])
+@app.route('/bookmarks/<username>/<saved_IDX>', methods=['DELETE'])
 @auth.login_required
-def deleteBookmark(username, saved_IDX):
+def bookmarksDelete(username, saved_IDX):
     cursor = None
     cnx = None
     try:
@@ -339,7 +341,7 @@ def deleteBookmark(username, saved_IDX):
             with cnx.cursor() as cursor:
                 cursor.execute("DELETE FROM saved WHERE username = %s AND saved_IDX = %s", (username, saved_IDX))
                 cnx.commit()
-                response = jsonify('Deleted Successfully!')
+                response = jsonify({"Response": "Bookmark Deleted"})
                 response.status_code = 200
                 return response
     except Exception as e:
@@ -352,8 +354,8 @@ def deleteBookmark(username, saved_IDX):
             cnx.close()
 
 ## ACCOUNT ##
-@app.route('/user', methods=['POST'])
-def createUser():
+@app.route('/users', methods=['POST'])
+def usersCreate():
     cursor = None
     cnx = None
     try:     
@@ -372,9 +374,9 @@ def createUser():
                     bindData = ( _username, _sanitized_name, _email, _password, False, True)            
                     cursor.execute(sqlQuery, bindData)
                     cnx.commit()
-                    respone = jsonify('User Created!')
-                    respone.status_code = 200
-                    return respone
+                    response = jsonify({"Response": "Account Created"})
+                    response.status_code = 200
+                    return response
         else:
             return show_405_message()
     except Exception as e:
@@ -386,8 +388,8 @@ def createUser():
         if 'cnx' in locals() and cnx:
             cnx.close()
 
-@app.route('/user/auth', methods=['POST'])
-def loginUser():
+@app.route('/users/auth', methods=['POST'])
+def usersAuth():
     cursor = None
     cnx = None
     try:     
@@ -427,8 +429,8 @@ def loginUser():
         if 'cnx' in locals() and cnx:
             cnx.close()
 
-@app.route('/user/recover', methods=['PUT'])
-def recoverUser():
+@app.route('/users/recover', methods=['PUT'])
+def usersRecover():
     cursor = None
     cnx = None
     try:     
@@ -445,9 +447,9 @@ def recoverUser():
                     bindData = (_reminder, _sanitized_email)
                     cursor.execute(sqlQuery, bindData)
                     cnx.commit()
-                    respone = jsonify('Recovery successfull')
-                    respone.status_code = 200
-                    return respone
+                    response = jsonify({"Response": "Account Recovery Request Successfull"})
+                    response.status_code = 200
+                    return response
         else:
             return show_405_message()
     except Exception as e:
@@ -459,8 +461,8 @@ def recoverUser():
         if 'cnx' in locals() and cnx:
             cnx.close()
 
-@app.route('/verify/<code>', methods=['GET'])
-def verifyCode(code):
+@app.route('/users/verify/<code>', methods=['GET'])
+def usersVerifyCode(code):
     cursor = None
     cnx = None
     try:
@@ -515,8 +517,8 @@ def verifyCode(code):
         if 'cnx' in locals() and cnx:
             cnx.close()
 
-@app.route('/changepassword', methods=['PUT'])
-def verifyChangeCode():
+@app.route('/users/change', methods=['PUT'])
+def usersChange():
     cursor = None
     cnx = None
     try:
@@ -532,9 +534,9 @@ def verifyChangeCode():
                     bindData = (_password, _email)
                     cursor.execute(sqlQuery, bindData)
                     cnx.commit()
-                    responed = jsonify("Password Updated")
-                    responed.status_code = 200
-                    return responed
+                    response = jsonify({"Response": "Account Password Updated"})
+                    response.status_code = 200
+                    return response
             else:
                 return show_500_message()
         else:

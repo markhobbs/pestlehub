@@ -38,7 +38,7 @@ const SaveButton:React.FC<Props> = () => {
             currPID: string, 
             setSaved: React.Dispatch<React.SetStateAction<boolean>>
         ) => {
-            const url = `${api}/bookmark/${username}`;
+            const url = `${api}/bookmarks/${username}`;
             try {
                 const rawResponse = await fetch(url, { 
                     method: 'GET',
@@ -70,7 +70,7 @@ const SaveButton:React.FC<Props> = () => {
     }, [currPID, token, username, isActive]);
 
     const handleSave = async () => {
-        const url = `${api}/bookmark`;
+        const url = `${api}/bookmarks`;
         try {
             const rawResponse = await fetch(url, {
                 method: 'POST',
@@ -96,7 +96,7 @@ const SaveButton:React.FC<Props> = () => {
     };
 
     const handleRemove = async () => {
-        const url = `${api}/bookmark/${username}/${currPID}`;
+        const url = `${api}/bookmarks/${username}/${currPID}`;
         try {
             const rawResponse = await fetch(url, {
                 method: 'DELETE', 

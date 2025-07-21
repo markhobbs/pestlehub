@@ -129,7 +129,7 @@ function Account({journey, activate}: AccountProps) {
   };
   
   const handleSignup = async () => {
-    const url = api + `/user`;
+    const url = api + `/users`;
     const hashedPassword = formState.password.trim();
     const rawResponse = await fetch(url, {
       method: "POST",
@@ -146,7 +146,7 @@ function Account({journey, activate}: AccountProps) {
 
   const handleLogin = async () => {
     const hashedPassword = formState.password.trim();
-    const url = api + `/user/auth`;
+    const url = api + `/users/auth`;
     
     const rawResponse = await fetch(url, {
       method: "POST",
@@ -166,7 +166,7 @@ function Account({journey, activate}: AccountProps) {
   };
 
   const handleRecover = async () => {
-    const url = api + `/user/recover`;
+    const url = api + `/users/recover`;
     const rawResponse = await fetch(url, {
       method: "PUT",
       headers: {
