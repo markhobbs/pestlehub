@@ -24,7 +24,7 @@ const SearchList = () => {
       <div className="md:w-1/3">
         <Label 
           element="search" 
-          text="Spice" />
+          text="Lavender" />
       </div>
       <div className="md:w-2/3">
         <Input 
