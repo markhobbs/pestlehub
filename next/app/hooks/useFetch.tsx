@@ -1,9 +1,8 @@
-"use client"
+// useFetch.jsx
+import {useState,useEffect} from "react";
+import {headers} from "../utils/headers";
 
-import { useState, useEffect } from "react";
-import { headers } from "../utils/headers";
-
-const useFetch = (url) => {
+const useFetch = (url: string) => {
   const [data, setData] = useState(null);
   useEffect(() => {
     fetch(url, { headers })

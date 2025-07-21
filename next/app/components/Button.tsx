@@ -1,6 +1,4 @@
 // Button.tsx
-'use client'
-
 import React,{useContext} from "react";
 import {ProfileContext} from '@/ContextProvider/ProfileProvider';
 import {useRouter} from "next/navigation";

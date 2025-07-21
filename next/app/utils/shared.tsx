@@ -1,17 +1,17 @@
 /* shared.py */
 
-export const capitalizeFirst = (str) => {
+export const capitalizeFirst = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export const convertAmountFriendly = (quantity) => {
+export const convertAmountFriendly = (quantity: string) => {
     let response = quantity;
     const intQuantity = parseInt(quantity) !== 0 ? parseInt(quantity) + " " : "";
     const decimalPart = quantity.slice(-3);
   
     switch (decimalPart) {
       case ".00":
-        response = Math.floor(quantity);
+        response = "";
         break;
       case ".25":
         response = intQuantity + "1/4";

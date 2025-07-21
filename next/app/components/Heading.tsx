@@ -1,6 +1,4 @@
 // Heading.tsx
-"use client"
-
 import React from 'react';
 
 interface HeaderProps {
@@ -13,7 +11,7 @@ export default function Heading(props: HeaderProps) {
     let addClass;
     switch(Tag) {
         case "h1":
-            addClass = "mb-2 md:mb-5 text-4xl md:text-5xl dark:text-white";
+            addClass = "mb-2 md:mt-4 md:mb-8 text-4xl md:text-5xl dark:text-white";
             break;
         case "h2":
             addClass = "mb-2 md:mb-5 text-3xl md:text-4xl";

@@ -1,0 +1,6 @@
+{ 
+  "api": "http://localhost:8081",
+  "maxDish": 5,
+  "maxIngredient": 30,
+  "maxMethod": 10
+}

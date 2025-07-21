@@ -10,8 +10,6 @@ nvm use v18.20.8
 # ENV
 Rename example .env.example > .env 
 
-Rename example /next/.env.example .env  > /next/.env
-
 Update to your requirements.  Or store them in Git enviorment variables 
 
 # NEXT

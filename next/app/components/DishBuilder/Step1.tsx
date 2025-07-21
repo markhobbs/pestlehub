@@ -1,10 +1,10 @@
 // step1.tsx
-"use client"
-
 import React, { useCallback, ChangeEvent} from "react";
 import Heading from "@/components/Heading";
 import Search from "@/components/DishBuilder/Search"
 import StepNav from "@/components/DishBuilder/StepNav";
+import {MaxIngredients} from "@/components/Snippets";
+import config from '@/data/config.json';
 import dictionary from '@/data/dictionary.json';
 import states from '@/data/states.json'
 import units from '@/data/units.json'
@@ -48,6 +48,7 @@ const StepOne: React.FC<StepOneProps> = React.memo(({ dish, handleChange, next }
         state_ID: number) => {
 
         if (!ingredientName.trim()) return;
+        if (!(ingredients.length < config.maxIngredient)) return;
 
         const ingredientExists = ingredients.find((ingredient) => ingredient.name.toLowerCase() === ingredientName.toLowerCase());
         let ingredientsBuilder: Ingredients[];
@@ -82,29 +83,44 @@ const StepOne: React.FC<StepOneProps> = React.memo(({ dish, handleChange, next }
         }
     }, [dish, handleChange]);
 
+    const SelectedIngredients = ({ ingredients }: any) => {
+      return Array.isArray(ingredients) && ingredients.length >= 1 && <>
+            <Heading 
+                Tag="h3"
+                title={dictionary.dbuild.ingredientsTitle} />
+            <MaxIngredients />
+            <ul>
+                {ingredients.map((ingredient, index) => {
+                    const {name, state_ID, unit_ID, quantity} = ingredient;
+                    return <li 
+                        key={index} 
+                        className="inline-flex">
+                        <button 
+                            className="cursor-pointer bg-red-700 hover:bg-red-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
+                            onClick={() => deleteIngredient(name)}>
+                                REMOVE <sup>{quantity}</sup>{units
+                            .filter((unit) => 
+                                Number(unit.index) === unit_ID && Number(unit.index) !== -1)
+                            .map((unit, i) => 
+                                <sup key={i}>{unit.code}</sup>)
+                            } {name} {states.filter((state) => 
+                                Number(state.index) === state_ID && Number(state.index) !== -1).map((state) => 
+                                <sup key={state.index}>{state.name}</sup> )} 
+                    </button>
+                </li>
+                })}
+            </ul>
+        </>
+    };
+    
     return <>
-        <StepNav next={next} title={dictionary.dbuild.nav.step1} />
-        <Search onAddIngredient={addIngredient} />
-        {ingredients.length > 0 && <Heading 
-            Tag="h3"
-            title={dictionary.dbuild.ingredientsTitle} />}
-        {ingredients && <ul>
-            {ingredients.map((ingredient, index) => <li 
-                key={index} 
-                className="inline-flex">
-                <button 
-                    className="cursor-pointer bg-red-700 hover:bg-red-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
-                    onClick={() => deleteIngredient(ingredient.name)}><sup>{ingredient.quantity}</sup>{units
-                    .filter((unit) => 
-                        Number(unit.index) === ingredient.unit_ID 
-                        && Number(unit.index) !== -1)
-                    .map((unit, i) => <sup key={i}>{unit.code}</sup>)
-                    } {ingredient.name} {states.filter((state) => 
-                    Number(state.index) === ingredient.state_ID
-                    && Number(state.index) !== -1).map((state) => <sup key={state.index}>{state.name}</sup> )} x 
-               </button>
-            </li>)}
-        </ul>}
+        <Search 
+            ingredients={ingredients} 
+            onAddIngredient={addIngredient} />
+        <SelectedIngredients ingredients={ingredients} />
+        <StepNav 
+            next={next} 
+            title={dictionary.dbuild.nav.step1} />
     </>});
 
 StepOne.displayName = 'StepOne';

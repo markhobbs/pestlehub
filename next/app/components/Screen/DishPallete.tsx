@@ -1,7 +1,7 @@
 // DishPallete.tsx
 import React from "react";
 import Heading from "@/components/Heading";
-import ListLink from "@/components/ListLink";
+import Ingredients from "@/components/Screen/Ingredients";
 
 interface DishPalleteProps {
   items: {
@@ -15,18 +15,34 @@ interface DishPalleteProps {
       time_cook?: number | undefined; 
     };
   };
-}
+};
+
+const Lists: React.FC<DishPalleteProps> = ({ items }) => {
+  const {item} = items || {};
+  const {time_prep, time_cook} = item || {};
+  
+  return <section>
+    {item && 
+      <Ingredients items={items} />}
+
+    {(time_prep || time_cook) && 
+      <Heading Tag="h3" title="Timings" />}
+
+    {(time_prep || time_cook) && 
+      <ul className="mb-4 mt-4" role="list">
+        {(time_prep && time_prep > 0) && 
+          <li>Preperation Time <strong>{time_prep}</strong> <sup>min(s)</sup></li>
+        } 
+        {(time_cook && time_cook > 0) && 
+          <li>Cooking Time <strong>{time_cook}</strong> <sup>min(s)</sup></li>}
+      </ul>
+    }
+  </section>
+};
 
 const DishPallete: React.FC<DishPalleteProps> = ({items}) => {
-  const {time_prep, time_cook = 0} = items.item;
-  return <>
-      {items.item && <ListLink items={items} />}
-      {(time_prep || time_cook) && <Heading Tag="h3" title="Timings" />}
-      {(time_prep || time_cook) && <ul className="mb-4 mt-4" role="list">
-        {(time_prep && time_prep > 0 ) && <li>Preperation Time <strong>{items.item.time_prep}</strong> <sup>min(s)</sup></li>} 
-        {(items.item.time_cook && time_cook > 0) && <li>Cooking Time <strong>{time_cook}</strong> <sup>min(s)</sup></li>}</ul>}
-    </>
-}
+  return <Lists items={items} />
+};
 
 DishPallete.displayName = 'DishPallete';
 export default DishPallete;

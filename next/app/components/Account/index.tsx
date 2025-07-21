@@ -1,9 +1,8 @@
+// Account/index.tsx
 "use client"
-
-import React, {useEffect, useState, useContext} from "react";
+import React,{useEffect, useState, useContext} from "react";
 import {useRouter} from "next/navigation";
 import {headers} from "@/utils/headers";
-import {PASSWORD_REGEX, EMAIL_REGEX} from "@/utils/shared";
 import {ProfileContext} from '@/ContextProvider/ProfileProvider';
 import {DishContext} from '@/ContextProvider/DishProvider';
 import PasswordInputField from "@/components/Account/PasswordInputField";
@@ -14,6 +13,8 @@ import TokenInputField from "@/components/Account/TokenInputField";
 import JourneyButton from "@/components/Account/JourneyButton";
 import {ForgottenPassword} from "@/components/Snippets";
 import dictionary from '@/data/dictionary.json';
+import config from '@/data/config.json';
+import {validateEmail,validatePassword} from "@/utils/validation";
 
 interface AccountProps {
   journey?: string;
@@ -45,6 +46,7 @@ function Account({journey, activate}: AccountProps) {
   const errorsDefault = {name: "*Required", email: "*Required", token: "*Required", password: "*Required", confirmPassword: "*Required"}
   const [formState, setFormState] = useState(formStateDefault);
   const [errors, setErrors] = useState<Errors>(errorsDefault);
+  const api = `${process.env.NEXT_PUBLIC_API_URI || config.api}`;
 
   useEffect(() => {
     switch (journey) {
@@ -109,22 +111,6 @@ function Account({journey, activate}: AccountProps) {
     }
   };
 
-  const validatePassword = (password : string) => {
-    if (password.length === 0) return "Password is empty";
-    if (!PASSWORD_REGEX.uppercase.test(password)) return "At least one Uppercase";
-    if (!PASSWORD_REGEX.lowercase.test(password)) return "At least one Lowercase";
-    if (!PASSWORD_REGEX.digits.test(password)) return "At least one digit";
-    if (!PASSWORD_REGEX.specialChar.test(password)) return "At least one Special Character";
-    if (!PASSWORD_REGEX.minLength.test(password)) return "At least minimum 8 characters";
-    return "";
-  };
-
-  const validateEmail = (email: string) => {
-    if (email.length === 0) return "Email is empty";
-    if (!EMAIL_REGEX.test(email)) return "Must be a valid email";
-    return "";
-  };
-
   const handleEvent = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = event.target;
     switch (name) {
@@ -141,9 +127,9 @@ function Account({journey, activate}: AccountProps) {
         break;
     }
   };
-
+  
   const handleSignup = async () => {
-    const url = process.env.NEXT_PUBLIC_API_URI + `/user`;
+    const url = api + `/users`;
     const hashedPassword = formState.password.trim();
     const rawResponse = await fetch(url, {
       method: "POST",
@@ -160,7 +146,7 @@ function Account({journey, activate}: AccountProps) {
 
   const handleLogin = async () => {
     const hashedPassword = formState.password.trim();
-    const url = process.env.NEXT_PUBLIC_API_URI + `/user/auth`;
+    const url = api + `/users/auth`;
     
     const rawResponse = await fetch(url, {
       method: "POST",
@@ -180,7 +166,7 @@ function Account({journey, activate}: AccountProps) {
   };
 
   const handleRecover = async () => {
-    const url = process.env.NEXT_PUBLIC_API_URI + `/user/recover`;
+    const url = api + `/users/recover`;
     const rawResponse = await fetch(url, {
       method: "PUT",
       headers: {

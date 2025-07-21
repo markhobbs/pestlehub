@@ -1,22 +1,23 @@
 // Screen/index.js
 "use client"
-import React, {useEffect, useState} from "react";
+import React,{useEffect,useState} from "react";
 import SaveButton from "@/components/SaveButton";
 import MethodSection from "@/components/Screen/MethodSection";
 import ContentSection from "@/components/Screen/ContentSection";
+import config from '@/data/config.json';
 import {headers} from "@/utils/headers";
 
-const Screen = (id) => {
+const Screen = (pid) => {
   const [item, setItem ] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true)
-  const dishUrl = `${process.env.NEXT_PUBLIC_API_URI}/dish/${id.id}`;
+  const api = `${process.env.NEXT_PUBLIC_API_URI || config.api}/dishes/dish/${pid.id}`;
 
   useEffect(() => {
     if (!isLoading) return;
     const handleGetDish = async () => {
       try {
-        const response = await fetch(dishUrl, {method: 'GET', headers: headers});
+        const response = await fetch(api, {method: 'GET', headers: headers});
         const data = await response.json();
         if(data) { 
           setItem(data) ;
@@ -27,13 +28,13 @@ const Screen = (id) => {
     };
     handleGetDish();
     setIsLoading(false);
-  }, [dishUrl, isLoading, setIsLoading, setItem]);
+  }, [api, isLoading, setIsLoading, setItem]);
 
   const handleAccordionClick = (index) => {
     setActiveIndex(index === activeIndex ? -1 : index);
   };
-  
-  return item && <section>
+
+  const Sections = () => <section>
     <ContentSection items={item} />
     <MethodSection 
       items={item} 
@@ -41,6 +42,8 @@ const Screen = (id) => {
       handleAccordionClick={handleAccordionClick} />
     <SaveButton table={item?.item?.category || ''} />
   </section>
+
+  return item && <Sections />
 };
 
 Screen.displayName = 'Screen';

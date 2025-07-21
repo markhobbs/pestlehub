@@ -1,26 +1,40 @@
 // index.tsx
 "use client"
-
-import React, { useState, useCallback, useContext } from "react";
-import { useRouter } from "next/navigation";
-import { DishContext } from '@/ContextProvider/DishProvider';
-import { ProfileContext } from '@/ContextProvider/ProfileProvider';
-import { capitalizeFirst, NUMBERS_REGEX } from "@/utils/shared";
-import StepOne from "./Step1";
-import StepTwo from "./Step2";
-import StepThree from "./Step3";
+import React,{useState,useCallback,useContext} from "react";
+import {useRouter} from "next/navigation";
+import {DishContext} from '@/ContextProvider/DishProvider';
+import {ProfileContext} from '@/ContextProvider/ProfileProvider';
+import StepOne from "@/components/DishBuilder/Step1";
+import StepTwo from "@/components/DishBuilder/Step2";
+import StepThree from "@/components/DishBuilder/Step3";
+import {validateTextAreaLimit,validateNotEmpty,validateTimings} from "@/utils/validation"
+import {capitalizeFirst} from "@/utils/shared";
 
 /* MultiStepForm - DishBuilder */
 const DishBuilder = () => {
   const router = useRouter();
-  const { setDishes, setStale } = useContext(DishContext);
-  const { profile } = useContext(ProfileContext);
+  const {setDishes, setStale} = useContext(DishContext);
+  const {profile} = useContext(ProfileContext);
   const username =  profile && profile.username || {};
   const [step, setStep] = useState(1);
-  const [dish, setDish] = useState({ id:'', title:'', ingredients:[], methods:[], time_prep: 0, time_cook: 0, publishedby: username});
   const next = useCallback(() => setStep((prev) => prev + 1), []);
   const back = useCallback(() => setStep((prev) => prev - 1), []);
-  const errorsDefault = {time_cook: null, time_prep: null, title: "*Required"}
+  const [dish, setDish] = useState({ 
+    id:'', 
+    title:'', 
+    ingredients:[], 
+    methods:[], 
+    time_prep: 0, 
+    time_cook: 0, 
+    publishedby: username
+  });
+  const errorsDefault = {
+    time_cook: null, 
+    time_prep: null, 
+    title: "*Required",
+    bodyError:"*Required",
+    headingError: "*Required"
+  }
   const [errors, setErrors] = useState(errorsDefault);
 
   /**
@@ -40,6 +54,14 @@ const DishBuilder = () => {
     const { name, value } = e.target || {};
     let errorMsg = "";
     switch (name) {
+      case "body":
+        errorMsg = validateTextAreaLimit(value);
+        setErrors((prevState) => ({ ...prevState, body: errorMsg }));
+        break;
+      case "heading":
+        errorMsg = validateNotEmpty(value);
+        setErrors((prevState) => ({ ...prevState, heading: errorMsg }));
+        break;
       case "time_cook":
         errorMsg = validateTimings(value);
         setErrors((prevState) => ({ ...prevState, time_cook: errorMsg }));
@@ -49,39 +71,13 @@ const DishBuilder = () => {
         setErrors((prevState) => ({ ...prevState, time_prep: errorMsg }));
         break;
       case "title":
-        errorMsg = validateTitle(value);
+        errorMsg = validateNotEmpty(value);
         setErrors((prevState) => ({ ...prevState, title: errorMsg }));
         break;
       default:
         break;
     }
   }, []);
-
-  /**
-   * Assigns the Regex to the input value.
-   * 
-   * @param value - The change event value for validating.
-   * 
-   */
-  const validateTimings = (value) => {
-    if (value !== "") {
-      //if (time.length === 0) return "Time is empty";
-      if (!NUMBERS_REGEX.digits.test(value)) return "Digits only";
-      if (NUMBERS_REGEX.maxLength.test(value)) return "Maximum of 6 digits";
-      return "";
-    }
-  };
-  
-   /**
-   * Empty check on required title
-   * 
-   * @param value - The change event value for validating.
-   * 
-   */
-  const validateTitle = (value) => {
-      if (value.length === 0) return "Title is empty";
-      return "";
-  };
 
   /**
    * Handles changes to the form inputs and updates the dish state accordingly.
@@ -146,10 +142,13 @@ const DishBuilder = () => {
             next={next} />)}
         {step === 2 && (
           <StepTwo
-            back={ back }
-            dish={ dish }
-            handleChange={ handleChange }
-            next={ next } />)}
+            back={back}
+            dish={dish}
+            handleChange={handleChange}
+            handleValidation={handleValidation}
+            next={next}
+            bodyError={errors.body} 
+            headingError={errors.heading} />)}
         {step === 3 && (
           <StepThree
             back={back}
@@ -159,8 +158,7 @@ const DishBuilder = () => {
             handleValidation={handleValidation}
             timeCookError={errors.time_cook} 
             timePrepError={errors.time_prep}
-            titleError={errors.title}
-          />)}
+            titleError={errors.title} />)}
       </form>
   );
 };

@@ -1,10 +1,9 @@
+// DishProvider.tsx
 "use client"
-
-import React, { createContext, useState } from 'react';
-
+import React,{createContext,useState } from 'react';
 export const DishContext = createContext("");
 
-export const DishProvider = ({children }) => {
+export const DishProvider = ({children}) => {
     const [dishes, setDishes] = useState([]);
     const [dashboard, setDashboard] = useState();
     const [inputs, setInputs] = useState();

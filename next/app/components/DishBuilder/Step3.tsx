@@ -1,9 +1,7 @@
 // step3.tsx
-"use client"
-
-import React, {ChangeEventHandler} from "react";
-import CurrentIngredients from "@/components/CurrentIngredients";
-import CurrentMethods from "@/components/CurrentMethods";
+import React,{ChangeEventHandler} from "react";
+import Ingredients from "@/components/Ingredients";
+import Methods from "@/components/Methods";
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
 import Label from "@/components/Label";
@@ -60,8 +58,8 @@ const SaveDishButton = (props: SaveDishProps) => {
       || dish.methods.length === 0 
       || ((timePrepError && timePrepError.length > 0) && true) 
       || ((timeCookError && timeCookError.length > 0) && true) }>
-    <span>Save</span>
-  </button>
+    <span>SAVE</span>
+  </button>   
 };
 
 const StepThree: React.FC<StepThreeProps> = React.memo(({ 
@@ -74,7 +72,6 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
   timeCookError,
   timePrepError
   }) => <>
-    <StepNav back={back} title={dictionary.dbuild.nav.step3} />
     <div className="mb-2">
         <Label 
           text="Title" 
@@ -93,13 +90,13 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
       <Heading 
         Tag="h3" 
         title={dictionary.dbuild.ingredientsTitle} />
-      <CurrentIngredients dish={dish} />
+      <Ingredients dish={dish} />
     </div>
     <div className="mb-2">
       <Heading 
         Tag="h3" 
         title={dictionary.dbuild.methodsTitle} />
-      <CurrentMethods dish={dish} />
+      <Methods dish={dish} />
     </div>
     <Heading 
       Tag="h3" 
@@ -143,6 +140,9 @@ const StepThree: React.FC<StepThreeProps> = React.memo(({
       dish={dish}
       timePrepError={timePrepError}
       timeCookError={timeCookError} />
+    <StepNav 
+      back={back} 
+      title={dictionary.dbuild.nav.step3} />
 </>);
 
 StepThree.displayName = 'StepThree';

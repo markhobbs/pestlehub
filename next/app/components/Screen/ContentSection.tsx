@@ -18,15 +18,11 @@ interface ContentSectionProps {
   };
 }
 
-const ContentSection: React.FC<ContentSectionProps> = ({ items }) => (
-  <>
-    {items.item && <>
-      <Heading Tag="h2" title={items.item.title} />
-      {items.item.category === "dish" && <DishPallete items={items} /> }
-      {items.item.category === "spice" && <SpicePallete items={items} /> }
-    </>}
-  </>
-);
+const ContentSection: React.FC<ContentSectionProps> = ({ items }) => items.item && <>
+    <Heading Tag="h2" title={items.item.title} />
+    {items.item.category === "dish" && <DishPallete items={items} /> }
+    {items.item.category === "spice" && <SpicePallete items={items} /> }
+  </>;
 
 ContentSection.displayName = 'ContentSection';
 export default ContentSection;

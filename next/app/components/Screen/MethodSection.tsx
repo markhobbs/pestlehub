@@ -17,10 +17,11 @@ interface MethodSectionProps {
   handleAccordionClick: (index: number) => void;
 }
 
+const MethodSection: React.FC<MethodSectionProps> = ({ items, activeIndex, handleAccordionClick }) => {
+  const methods = items && items.item.methods;
 
-const MethodSection: React.FC<MethodSectionProps> = ({ items, activeIndex, handleAccordionClick }) => 
-  (items && items.item.methods) && <ul>
-    {items.item.methods.map((item, index) => <Accordion
+  return methods && <ul>
+    {methods.map((item, index) => <Accordion
       key={index}
       activeIndex={activeIndex}
       pID={item.pID}
@@ -28,7 +29,8 @@ const MethodSection: React.FC<MethodSectionProps> = ({ items, activeIndex, handl
       index={index}
       onAccordionClick={handleAccordionClick}
       title={item.heading} />)}
-  </ul>;
-
+  </ul>
+}
+  
 MethodSection.displayName = 'MethodSection';
 export default MethodSection;

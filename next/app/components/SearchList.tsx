@@ -1,12 +1,10 @@
 // SearchList.tsx
 "use client"
-
-import React, {useState, useRef, ChangeEvent} from "react";
+import React,{useState,useRef,ChangeEvent} from "react";
 import Link from "next/link";
 import Label from "@/components/Label";
 import Input from "@/components/Input";
 import spices from "@/data/spices.json";
-
 
 const SearchList = () => {
   const searchRef = useRef(null); // console.log(searchRef.current);
@@ -24,14 +22,14 @@ const SearchList = () => {
       <div className="md:w-1/3">
         <Label 
           element="search" 
-          text="Spice" />
+          text="Ingredients" />
       </div>
       <div className="md:w-2/3">
         <Input 
           element="search" 
           onChange={changeFilterName} 
           ref={searchRef}
-          text="Search" />
+          text="Lavender" />
       </div>
     </div>
     <div className="md:flex md:items-center mb-2">

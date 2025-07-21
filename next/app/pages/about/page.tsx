@@ -1,6 +1,4 @@
 /* About.tsx */
-"use client"
-
 import React from "react";
 import dictionary from '@/data/dictionary.json';
 import Heading from "@/components/Heading";

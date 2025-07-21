@@ -1,23 +1,23 @@
 // DashboardSections.tsx
 "use client"
-
-import {useEffect, useState, useContext} from "react";
+import {useEffect,useContext} from "react";
 import {ProfileContext} from '@/ContextProvider/ProfileProvider';
 import {DishContext} from '@/ContextProvider/DishProvider';
 import dictionary from '@/data/dictionary.json';
 import Button from "@/components/Button";
 import Sections from "@/components/Dashboard/Sections";
-import DishesPending from "@/components/DishesPending";
+import Pending from "@/components/Pending";
 import {NoUserAccount, Inspiration} from "@/components/Snippets";
+import config from '@/data/config.json';
 
 const Screen = () => {
   const {profile} = useContext(ProfileContext);
   const {dashboard, dishes, setStale, setDashboard, setDishes, isStale} = useContext(DishContext);
-  // const [response, setResponse] = useState([]);
   const {username, token} = profile || {};
-  const rootEndpoint = `${process.env.NEXT_PUBLIC_API_URI}`;
-  const getDishesEndpoint = `${rootEndpoint}/dish/user/${username}`;
-  const saveDishesEndpoint = `${rootEndpoint}/dishes`;
+  const api = `${process.env.NEXT_PUBLIC_API_URI || config.api}`;
+  const getDishesEndpoint = `${api}/dishes/${username}`;
+  const saveDishesEndpoint = `${api}/dishes`;
+  // const [response, setResponse] = useState([]);
 
   useEffect(() => { 
     if (username && isStale) {
@@ -25,7 +25,6 @@ const Screen = () => {
         try {
           // Attach Author to Dish
           dish.dishes[0].dish.publishedby = username;
-
           fetch(`${saveDishesEndpoint}`, {
             method: "POST", 
             headers: {
@@ -91,7 +90,7 @@ const Screen = () => {
     return <>
       {/*response.length > 0 && <p>{JSON.stringify(response)}</p>*/}
       <Sections data={dashboard} />
-      <DishesPending dishes={dishes} />
+      <Pending dishes={dishes} />
       <LogOutButton /> 
       <Inspiration />
     </>
@@ -99,7 +98,7 @@ const Screen = () => {
 
   const NonAuthenticatedScreen = () => {
     return <>
-      <DishesPending dishes={dishes} />
+      <Pending dishes={dishes} />
       <NoUserAccount />
     </>
   }

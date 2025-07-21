@@ -1,5 +1,4 @@
 // Search.tsx 
-
 import React, {useState} from 'react';
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
@@ -12,7 +11,6 @@ import units from '@/data/units.json'
 import {capitalizeFirst} from "@/utils/shared";
 import {SelectListSVG} from "../../../public/SVGs";
 
-
 interface SearchProps {
   onAddIngredient: (
     ingredientName: string,
@@ -20,6 +18,7 @@ interface SearchProps {
     unit_ID: number,
     state_ID: number
   ) => void;
+  ingredients: object;
 }
 
 const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
@@ -48,17 +47,17 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
           <button
             className="cursor-pointer bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
             onClick={(e) => handleAdd(e, query)}>
-            {capitalizeFirst(query)} +
+            ADD {capitalizeFirst(query)}
           </button>
         </li>
         {ingredients
-          .filter(ingredient => ingredient.name.toLowerCase().match(query))
+          .filter(ingredient => capitalizeFirst(ingredient.name).match(query))
           .map((filtered, index) => index < 5 && ( // <= only 5 items
             <li className="inline-flex" key={filtered.ingredient_ID}>
               <button
                 className="cursor-pointer bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
                 onClick={(e) => handleAdd(e, filtered.name)}>
-                {filtered.name} + 
+                ADD {filtered.name} 
               </button>
           </li>)
         )}
@@ -94,7 +93,7 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
   </div>
   
   const Results = () => <div>
-    {query && <Heading Tag="h3" title="Search" />}
+    {query && <Heading Tag="h3" title={`Results for '${query}'`} />}
     {ingredients.length > 0 && <SearchResults />}
   </div>
 
@@ -107,7 +106,8 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
             element={dictionary.dbuild.elements.search} />
           <Input 
             element={dictionary.dbuild.elements.search}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery((e.target.value).toLowerCase())} 
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
+              setQuery(capitalizeFirst((e.target.value)))} 
             text={dictionary.dbuild.placeholders.search}  />
         </div>
         <Units />
