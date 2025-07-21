@@ -8,7 +8,7 @@ describe('Headings', () => {
     const heading = screen.getByRole('heading', { level: 1 });
     expect(heading).toBeInTheDocument();
     expect(screen.getByText("Title Test")).toBeInTheDocument();
-    expect(heading).toHaveClass('mb-2 md:mb-5 text-4xl md:text-5xl dark:text-white font-bold');
+    expect(heading).toHaveClass('mb-2 md:mt-4 md:mb-8 text-4xl md:text-5xl dark:text-white font-bold');
   })
   it('H2 Heading Exists And Is Styled Correctly', () => {
     render(<Heading Tag="h2" title="Title Test" />);

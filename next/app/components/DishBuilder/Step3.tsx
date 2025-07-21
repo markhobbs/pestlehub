@@ -48,16 +48,19 @@ interface SaveDishProps {
 }
 
 const SaveDishButton = (props: SaveDishProps) => {
- const {dish, handleSubmit, timeCookError, timePrepError} = props || {};
+  const {dish, handleSubmit, timeCookError, timePrepError} = props || {};
+  const isDisabled = (
+    dish.title === '' || 
+    (dish.ingredients.length <= 0) || 
+    (dish.methods.length === 0) || 
+    (timePrepError && timePrepError.length > 0) || 
+    (timeCookError && timeCookError.length > 0)
+  ) || false;
+
   return <button 
     className="cursor-pointer rounded-md bg-emerald-700 mt-4 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:bg-stone-500" 
     onClick={handleSubmit}
-    disabled={
-      dish.title === '' 
-      || dish.ingredients.length <= 0 
-      || dish.methods.length === 0 
-      || ((timePrepError && timePrepError.length > 0) && true) 
-      || ((timeCookError && timeCookError.length > 0) && true) }>
+    disabled={isDisabled}>
     <span>SAVE</span>
   </button>   
 };
