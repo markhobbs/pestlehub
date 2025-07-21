@@ -1,6 +1,4 @@
 // StepNav.tsx
-"use client"
-
 import React from "react";
 
 const StepNav: React.FC<{ back?: () => void, next?: () => void, title: string }> = ({ back, next, title }) => {

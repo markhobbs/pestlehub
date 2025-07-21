@@ -1,5 +1,6 @@
+// Account/index.tsx
 "use client"
-import React, {useEffect, useState, useContext} from "react";
+import React,{useEffect, useState, useContext} from "react";
 import {useRouter} from "next/navigation";
 import {headers} from "@/utils/headers";
 import {ProfileContext} from '@/ContextProvider/ProfileProvider';
@@ -13,7 +14,7 @@ import JourneyButton from "@/components/Account/JourneyButton";
 import {ForgottenPassword} from "@/components/Snippets";
 import dictionary from '@/data/dictionary.json';
 import config from '@/data/config.json';
-import {validateEmail, validatePassword} from "@/utils/validation";
+import {validateEmail,validatePassword} from "@/utils/validation";
 
 interface AccountProps {
   journey?: string;

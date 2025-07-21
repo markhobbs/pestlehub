@@ -1,6 +1,5 @@
 // ScrollToTop.tsx
 "use client"
-
 import { useEffect } from "react";
 
 export default function ScrollToTop() {

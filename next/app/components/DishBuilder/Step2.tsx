@@ -1,7 +1,6 @@
 // step2.tsx
 "use client"
-
-import React, { useState, useCallback} from "react";
+import React,{useState,useCallback} from "react";
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
 import Label from "@/components/Label";

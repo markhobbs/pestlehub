@@ -1,7 +1,5 @@
 // SaveButton.tsx
-"use client"
-
-import React, {useEffect, useState, useContext} from "react";
+import React,{useEffect, useState, useContext} from "react";
 import {useRouter, usePathname} from "next/navigation";
 import {ProfileContext} from '@/ContextProvider/ProfileProvider';
 import {DishContext} from '@/ContextProvider/DishProvider';

@@ -1,6 +1,4 @@
 // NameInputField.js
-"use client"
-
 import Input from "@/components/Input";
 import Label from "@/components/Label";
 

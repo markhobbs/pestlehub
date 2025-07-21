@@ -1,6 +1,6 @@
 // Screen/index.js
 "use client"
-import React, {useEffect, useState} from "react";
+import React,{useEffect,useState} from "react";
 import SaveButton from "@/components/SaveButton";
 import MethodSection from "@/components/Screen/MethodSection";
 import ContentSection from "@/components/Screen/ContentSection";

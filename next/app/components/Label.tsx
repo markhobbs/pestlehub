@@ -1,5 +1,4 @@
 // Label.js
-"use client"
 
 interface LabelProps {
     element: string;

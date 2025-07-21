@@ -1,5 +1,4 @@
 // Input.js
-"use client"
 
 interface InputProps {
   element: string;

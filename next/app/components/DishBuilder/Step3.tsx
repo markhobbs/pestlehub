@@ -1,7 +1,5 @@
 // step3.tsx
-"use client"
-
-import React, {ChangeEventHandler} from "react";
+import React,{ChangeEventHandler} from "react";
 import Ingredients from "@/components/Ingredients";
 import Methods from "@/components/Methods";
 import Heading from "@/components/Heading";

@@ -1,5 +1,4 @@
 // Select.js
-"use client"
 
 interface TextAreaProps {
   element: string;

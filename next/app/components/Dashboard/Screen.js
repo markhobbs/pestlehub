@@ -1,6 +1,6 @@
 // DashboardSections.tsx
 "use client"
-import {useEffect, useContext} from "react";
+import {useEffect,useContext} from "react";
 import {ProfileContext} from '@/ContextProvider/ProfileProvider';
 import {DishContext} from '@/ContextProvider/DishProvider';
 import dictionary from '@/data/dictionary.json';

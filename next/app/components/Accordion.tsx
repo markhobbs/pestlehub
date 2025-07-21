@@ -1,6 +1,4 @@
 // Accordion.js
-'use client'
-
 import React from "react";
 import Heading from "@/components/Heading";
 import dictionary from "@/data/dictionary.json";
