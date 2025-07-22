@@ -5,6 +5,7 @@ from flask_caching import Cache
 from flask_httpauth import HTTPTokenAuth
 from time import time
 from config import config
+from functools import reduce
 import os
 import jwt
 import uuid
@@ -130,31 +131,61 @@ def dishesCreate():
         if cnx:
             cnx.close()
 
-@app.route('/dishes/<username>', methods=['GET'])
+@app.route('/dishes/<username>/<int:offset>', methods=['GET'])
 @auth.login_required
-def dishesUserGet(username):
+def dishesUserGet(username, offset):
     cursor = None
     cnx = None
     try:
         cnx = connect_to_mysql(config, attempts=3)
         if cnx and cnx.is_connected():
             with cnx.cursor() as cursor:
-                cursor.execute("SELECT dish.pID, dish.title FROM dish WHERE dish.username = %s ORDER BY dish.title ASC", (username,))
-                creations = cursor.fetchall()
-                cursor.execute("SELECT bookmarks.saved_IDX, bookmarks.type, dish.title FROM `bookmarks` LEFT JOIN `dish` ON dish.pID = bookmarks.saved_IDX WHERE bookmarks.username = %s ORDER BY dish.title ASC", (username,))
+
+                # Count Users Bookmarks
+                cursor.execute("SELECT count(*) as c FROM bookmarks WHERE username = %s", (username,))
+                bookmarks_count_query = cursor.fetchall()
+                bookmarks_count = int(reduce(lambda x, y: x + y, bookmarks_count_query[0]))
+
+                # Get bookmarks
+                cursor.execute(
+                    "SELECT bookmarks.saved_IDX, bookmarks.type, dish.title "
+                    "FROM `bookmarks` "
+                    "LEFT JOIN `dish` "
+                    "ON dish.pID = bookmarks.saved_IDX "
+                    "WHERE bookmarks.username = %s "
+                    "ORDER BY dish.title ASC", (username,))
                 bookmarks = cursor.fetchall()
+                
+                # Count Users Creations
+                cursor.execute("SELECT count(*) as c FROM dish WHERE username = %s", (username,))
+                creations_count_query = cursor.fetchall()
+                creations_count = int(reduce(lambda x, y: x + y, creations_count_query[0]))
+
+                # Get Creations
+                cursor.execute(
+                    "SELECT dish.pID, dish.title "
+                    "FROM dish "
+                    "WHERE dish.username = %s "
+                    "ORDER BY dish.title ASC "
+                    "LIMIT 10 "
+                    "OFFSET %s", (username, offset))
+                creations = cursor.fetchall()
+
+                # Response
                 response_data = {
                     "user" : {
-                        "creations": [{
-                            "pID": str(creation[0]),
-                            "title": str(creation[1]),
-                            "type": "dish",
-                        } for creation in creations if creation[0]],
                         "bookmarks": [{
                             "pID": str(bookmark[0]),
                             "type": str(bookmark[1]),
                             "title": str(bookmark[2]) if str(bookmark[1]) == "dish" else str(bookmark[2])
                         } for bookmark in bookmarks if bookmark[0]],
+                        "bookmarks_count" : bookmarks_count,
+                        "creations": [{
+                            "pID": str(creation[0]),
+                            "title": str(creation[1]),
+                            "type": "dish",
+                        } for creation in creations if creation[0]],
+                        "creations_count" : creations_count
                     } 
                 }
                 response = jsonify(response_data)

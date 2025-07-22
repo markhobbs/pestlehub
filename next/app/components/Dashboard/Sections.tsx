@@ -11,6 +11,8 @@ import config from '@/data/config.json';
 import dictionary from '@/data/dictionary.json';
 
 interface ProfileInterface {
+  offset: number;
+  setOffset: any;
   setStale: any;
   profile: {
     token?: string;
@@ -21,17 +23,20 @@ interface PropsInterface {
   data: {
     bookmarks: [{ pID: string; item: string; title: string; }]; 
     creations: [{ pID: string; item: string; title: string; }];
+    bookmarks_count: number;
+    creations_count: number;
   }
 }
 
 const Sections = ({data}: PropsInterface) => {
   const router = useRouter();
-  const { profile } = useContext(ProfileContext) as unknown as ProfileInterface;
-  const { setStale } = useContext(DishContext) as unknown as ProfileInterface;
+  const {profile} = useContext(ProfileContext) as unknown as ProfileInterface;
+  const {setOffset,setStale} = useContext(DishContext) as unknown as ProfileInterface;
   const {token} = profile || {};
-  const {creations, bookmarks} = data || {};
+  const {bookmarks,bookmarks_count,creations,creations_count} = data || {};
   const api = `${process.env.NEXT_PUBLIC_API_URI || config.api}`;
   const apiItemDelete = `${api}/dishes/${profile.username}`;
+  const limit = config.creationDashboardLimit;
   
   const handleDeleteDish = (item:{pid:{item:string}}) => {
     if (window.confirm("You are about to remove a Dish! Are you sure?") === true) {
@@ -61,20 +66,55 @@ const Sections = ({data}: PropsInterface) => {
       onClick={() => handleDeleteDish({pid})}>x</button>
   };
   
+  const DashBoardLinks = () => {
+    return <p className="mb-2 mt-2">Create a new dish using <Link 
+      className="text-blue-700 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline" 
+      href={{pathname: "/" }}>DishBuilder</Link>.<br />
+      Or try viewing our <Link className="text-blue-700 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline" 
+      href={{pathname: "/pages/dish/gguvjquhzxtqyelwd2zhaa" }}>
+      Example</Link> for inspiration.
+    </p>
+  }
+
+  const OffsetNav = () => {
+    let result = []
+    const page_count = Math.ceil(creations_count/limit);
+    for (let i = 0; i < page_count; i++) {
+      result.push(
+        <button
+          key={i} 
+          className="text-blue-700 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline" 
+          onClick={() => {
+            setOffset(((i-1)*limit)+limit);
+            setStale(true);
+          }}> 
+          [ {i+1} ] 
+        </button>
+      );
+    }
+    return result;
+  }
+  
   return <>
-   <Heading Tag="h3" title={dictionary.config.bookmarks} />
-      {bookmarks && bookmarks.length ? <ul 
-        className="list-disc mb-4 mt-4 pl-6" 
-        role="list">
-        {bookmarks.map((item, index) => <li key={index}>
-          <Link
-            className="text-blue-700 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline" 
-            href={{pathname: `/pages/dish/${item.pID}` }}>
-            {item.title}
-          </Link>
-      </li>)
-    }</ul> : <NoBookmarks />}
-    <Heading Tag="h3" title={dictionary.config.creations} />
+    <Heading Tag="h3" title={`${bookmarks_count} ${dictionary.config.bookmarks}`} />
+    {bookmarks && bookmarks.length ? <ul 
+      className="list-disc mb-4 mt-4 pl-6" 
+      role="list">
+      {bookmarks.map((item, index) => <li key={index}>
+        <Link
+          className="text-blue-700 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline" 
+          href={{pathname: `/pages/dish/${item.pID}` }}>
+          {item.title}
+        </Link>
+      </li>)}
+    </ul> : <NoBookmarks />}
+
+    <Heading 
+      Tag="h3" 
+      title={`${creations_count} ${dictionary.config.creations}`} />
+
+    {(creations_count && creations_count > limit) && <OffsetNav />}
+
     {creations && creations.length ? <ul 
       className="list-disc mb-4 mt-4 pl-6" 
       role="list">
@@ -89,16 +129,6 @@ const Sections = ({data}: PropsInterface) => {
     <DashBoardLinks />
   </>
 };
-
-const DashBoardLinks = () => {
-  return <p className="mb-2 mt-2">Create a new dish using <Link 
-    className="text-blue-700 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline" 
-    href={{pathname: "/" }}>DishBuilder</Link>.<br />
-    Or try viewing our <Link className="text-blue-700 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 hover:underline" 
-    href={{pathname: "/pages/dish/gguvjquhzxtqyelwd2zhaa" }}>
-    Example</Link> for inspiration.
-  </p>
-}
 
 Sections.displayName = 'Sections';
 export default Sections;
