@@ -2,14 +2,14 @@
 import type { Metadata } from "next";
 import "@/globals.css";
 import dictionary from '@/data/dictionary.json';
-import Nav from "@/components/Nav";
 import Heading from "@/components/Heading";
-
+import Nav from "@/components/Nav";
 import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "PestleHub",
   description: "Build and store your recipe ideas.",
+  keywords: ['Next.js', 'React', 'JavaScript', 'Recipe', 'Build', 'Store']
 };
 
 export default function RootLayout({

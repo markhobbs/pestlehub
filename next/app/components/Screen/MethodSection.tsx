@@ -14,10 +14,10 @@ interface MethodSectionProps {
     }
   };
   activeIndex: number;
-  handleAccordionClick: (index: number) => void;
+  handleActiveIndex: (index: number) => void;
 }
 
-const MethodSection: React.FC<MethodSectionProps> = ({ items, activeIndex, handleAccordionClick }) => {
+const MethodSection: React.FC<MethodSectionProps> = ({ items, activeIndex, handleActiveIndex }) => {
   const methods = items && items.item.methods;
 
   return methods && <ul>
@@ -27,7 +27,7 @@ const MethodSection: React.FC<MethodSectionProps> = ({ items, activeIndex, handl
       pID={item.pID}
       content={item.body}
       index={index}
-      onAccordionClick={handleAccordionClick}
+      onAccordionClick={handleActiveIndex}
       title={item.heading} />)}
   </ul>
 }
