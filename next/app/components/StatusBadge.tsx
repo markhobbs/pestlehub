@@ -16,10 +16,10 @@ const StatusBadge = () => {
   const {profile} = useContext(ProfileContext) as unknown as Profile;
   const active = (profile && profile.status === "active") || {}
   return (active) 
-  ? <Link aria-label="Open Dashboard" href={"/pages/dashboard"} title={"Open Dashboard"}>
+  ? <Link href={"/pages/dashboard"} title={"Open Dashboard"}>
       <IconSVGProfile active={true}/>
     </Link> 
-  : <Link aria-label="Login to dashboard" href={"/login"} title="Login to dashboard">
+  : <Link href={"/login"} title="Login to dashboard">
     <IconSVGProfile />
   </Link>};
 

@@ -6,7 +6,6 @@ interface LabelProps {
 }
 
 const Label: React.FC<LabelProps> = ({ element, text }) => <label 
-    aria-label={text}
     htmlFor={element} 
     className="block text-sm font-bold mb-2">
     {text}

@@ -43,7 +43,6 @@ const Button: React.FC<Props> = (props) => {
 
   return (
     <button
-      aria-label={label}
       onClick={() => handleActions()}
       className={`${addClasses}`}
       disabled={disabled}>

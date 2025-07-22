@@ -1,7 +1,6 @@
-const IconSVGProfile = (props) => {
+const IconSVGProfile = (props:{active?:boolean}) => {
   return (
     <svg
-      aria-label={`${(props.active) ? `Open Dashboard` : `Login to Dashboard`}`} 
       className={`h-6 w-6 ${(props.active) ? `fill-yellow-500 hover:fill-yellow-400 `: `fill-blue-700 hover:fill-blue-600 dark:fill-blue-400 dark:hover:fill-blue-300`}`} 
       width="30px" 
       height="30px" 
