@@ -113,7 +113,7 @@ const Sections = ({data}: PropsInterface) => {
       Tag="h3" 
       title={`${creations_count} ${dictionary.config.creations}`} />
 
-    {(creations_count && creations_count > limit) && <OffsetNav />}
+    {creations_count > limit && <OffsetNav />}
 
     {creations && creations.length ? <ul 
       className="list-disc mb-4 mt-4 pl-6" 
