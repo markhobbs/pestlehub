@@ -70,7 +70,7 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
       text={dictionary.dbuild.labels.units} 
       element={dictionary.dbuild.elements.units} />  
     <div className="relative">
-      <Select 
+      <Select
         element={dictionary.dbuild.elements.units}
         onChange={handleUnitChange}
         items={units} 
@@ -92,14 +92,15 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
     </div>
   </div>
   
-  const Results = () => <div>
+  const Results = () => <div data-testid="response">
     {query && <Heading Tag="h3" title={`Results for '${query}'`} />}
     {ingredients.length > 0 && <SearchResults />}
   </div>
 
-  return <div>
-    <div>
-      <div className="md:flex md:items-center"> 
+  return <div role="search">
+      <div 
+      className="md:flex md:items-center"
+      data-testid="query"> 
         <div className="mb-2">
           <Label 
             text={dictionary.dbuild.labels.search} 
@@ -113,7 +114,6 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
         <Units />
         <States />
       </div>
-    </div>
     <Results />
 </div>};
 

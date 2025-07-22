@@ -14,7 +14,6 @@ interface InputProps {
 }
 
 const Input: React.FC<InputProps> = ({element, onBlur, onChange, onKeyUp, pattern, ref, required, text, type, value}) => <input 
-  aria-label={text}
   autoComplete="off"
   className="shadow appearance-none border border-blue-500 rounded w-full py-2 px-3 mb-2 leading-tight"
   name={element} 
