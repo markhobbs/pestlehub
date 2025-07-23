@@ -1,5 +1,5 @@
 // Search.tsx 
-import React, {useState} from 'react';
+import React,{useState} from 'react';
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
 import Select from "@/components/Select";
@@ -23,21 +23,21 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
   const [query, setQuery] = useState<string>();
-  const [selectedUnit, setSelectedUnit] = useState<number>(0);
-  const [selectedState, setSelectedState] = useState<number>(0);
+  const [unit, setUnit] = useState<number>(0);
+  const [state, setState] = useState<number>(0);
 
   const handleAdd = (e: React.MouseEvent<HTMLButtonElement>, ingredient: string) => {
     e.preventDefault();
     const quantity = 1;
-    onAddIngredient(ingredient, quantity, selectedUnit, selectedState);
+    onAddIngredient(ingredient, quantity, unit, state);
   };
 
   const handleUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedUnit(parseInt(e.target.value, 10));
+    setUnit(parseInt(e.target.value, 10));
   };
 
   const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedState(parseInt(e.target.value, 10));
+    setState(parseInt(e.target.value, 10));
   };
 
   const SearchResults = () => {
@@ -57,7 +57,7 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
               <button
                 className="cursor-pointer bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mb-1 mr-1 rounded-full" 
                 onClick={(e) => handleAdd(e, filtered.name)}>
-                ADD {filtered.name} 
+                ADD {filtered.name}
               </button>
           </li>)
         )}
@@ -74,7 +74,7 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
         element={dictionary.dbuild.elements.units}
         onChange={handleUnitChange}
         items={units} 
-        value={selectedUnit} />
+        value={unit} />
     </div>
   </div>
 
@@ -87,7 +87,7 @@ const Search: React.FC<SearchProps> = ({ onAddIngredient }) => {
         element={dictionary.dbuild.elements.states}
         onChange={handleStateChange}
         items={states} 
-        value={selectedState} />
+        value={state} />
         <SelectListSVG />
     </div>
   </div>

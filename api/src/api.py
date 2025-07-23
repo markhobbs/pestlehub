@@ -133,6 +133,7 @@ def dishesCreate():
 
 @app.route('/dishes/<username>/<int:offset>', methods=['GET'])
 @auth.login_required
+@cache.cached(timeout=1)
 def dishesUserGet(username, offset):
     cursor = None
     cnx = None
@@ -597,6 +598,7 @@ def verify_token(token):
 
 ## ERRORS ##
 @app.errorhandler(404)
+@cache.cached(timeout=50)
 def show_404_message(error=None):
     message = {
         'status': 404,

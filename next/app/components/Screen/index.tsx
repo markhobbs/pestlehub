@@ -1,7 +1,7 @@
 // Screen/index.tsx
 "use client"
 import React,{useState} from "react";
-import SaveButton from "@/components/SaveButton";
+import Boomark from "@/components/Boomark";
 import MethodSection from "@/components/Screen/MethodSection";
 import ContentSection from "@/components/Screen/ContentSection";
 import config from '@/data/config.json';
@@ -23,10 +23,10 @@ export default function Screen(pid : {id: string}) {
     <section role="section">
       <ContentSection items={data} />
       <MethodSection 
-        items={data} 
         activeIndex={activeIndex} 
-        handleActiveIndex={handleActiveIndex} />
-      <SaveButton table={data.item.category} />
+        handleActiveIndex={handleActiveIndex} 
+        items={data} />
+      <Boomark table={data.item.category} />
     </section>
   );
 };

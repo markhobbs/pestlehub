@@ -1,4 +1,4 @@
-// DishProvider.tsx
+// DishProvider.js
 "use client"
 import React,{createContext,useState } from 'react';
 export const DishContext = createContext("");
@@ -20,8 +20,7 @@ export const DishProvider = ({children}) => {
             setDishes,
             setInputs,
             setOffset,
-            setStale   
-        }}>
-        {children}
+            setStale
+        }}>{children}
     </DishContext.Provider>
 };
