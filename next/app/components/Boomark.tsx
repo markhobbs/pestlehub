@@ -1,6 +1,6 @@
-// SaveButton.tsx
-import React,{useEffect, useState, useContext} from "react";
-import {useRouter, usePathname} from "next/navigation";
+// Boomark.tsx
+import React,{useEffect,useState,useContext} from "react";
+import {useRouter,usePathname} from "next/navigation";
 import {ProfileContext} from '@/ContextProvider/ProfileProvider';
 import {DishContext} from '@/ContextProvider/DishProvider';
 import {Inspiration} from "@/components/Snippets";
@@ -21,7 +21,7 @@ interface Dish {
     setStale: boolean | any;
 }
 
-const SaveButton:React.FC<Props> = () => {
+const Boomark:React.FC<Props> = () => {
     const router = useRouter();
     const pathname = usePathname()
     const {profile} = useContext(ProfileContext) as unknown as Profile;
@@ -144,5 +144,5 @@ const SaveButton:React.FC<Props> = () => {
     );
 };
 
-SaveButton.displayName = 'SaveButton';
-export default SaveButton;
+Boomark.displayName = 'Boomark';
+export default Boomark;

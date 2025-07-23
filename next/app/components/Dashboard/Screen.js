@@ -4,7 +4,7 @@ import {useContext,useEffect} from "react";
 import {ProfileContext} from '@/ContextProvider/ProfileProvider';
 import {DishContext} from '@/ContextProvider/DishProvider';
 import dictionary from '@/data/dictionary.json';
-import Button from "@/components/Button";
+import Button from "@/components/Account/Button";
 import Sections from "@/components/Dashboard/Sections";
 import Pending from "@/components/Pending";
 import {NoUserAccount, Inspiration} from "@/components/Snippets";
